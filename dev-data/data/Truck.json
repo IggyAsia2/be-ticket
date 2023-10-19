@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Welder",
+    "licensePlateNumber": "201-21-4344",
+    "currentOdo": 4999
+  },
+  {
+    "name": "Laborer",
+    "licensePlateNumber": "804-83-3300",
+    "currentOdo": 9142
+  },
+  {
+    "name": "Tile Setter",
+    "licensePlateNumber": "349-08-1916",
+    "currentOdo": 4534
+  },
+  {
+    "name": "Painter",
+    "licensePlateNumber": "435-87-4228",
+    "currentOdo": 4093
+  },
+  {
+    "name": "Pipelayer",
+    "licensePlateNumber": "300-69-3044",
+    "currentOdo": 3876
+  },
+  {
+    "name": "Stucco Mason",
+    "licensePlateNumber": "101-67-7097",
+    "currentOdo": 6968
+  },
+  {
+    "name": "Welder",
+    "licensePlateNumber": "477-50-2466",
+    "currentOdo": 4032
+  },
+  {
+    "name": "Safety Officer",
+    "licensePlateNumber": "636-40-8037",
+    "currentOdo": 6572
+  },
+  {
+    "name": "Pipefitter",
+    "licensePlateNumber": "358-02-4165",
+    "currentOdo": 4483
+  },
+  {
+    "name": "Laborer",
+    "licensePlateNumber": "268-40-3496",
+    "currentOdo": 4849
+  }
+]

@@ -1,0 +1,117 @@
+tags:
+  name: Authentication
+  description: The Authentication managing API
+
+components:
+  schemas:
+    LoginUser:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: pcvbaoit@gmail.com
+        password: "123456"
+    SignUpUser:
+      type: object
+      required:
+        - name
+        - email
+        - password
+        - passwordConfirm
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        passwordConfirm:
+          type: string
+      example:
+        name: test
+        email: test@gmail.com
+        password: "12"
+        passwordConfirm: "12"
+    UpdatePassword:
+      type: object
+      required:
+        - passwordCurrent
+        - password
+        - passwordConfirm
+      properties:
+        passwordCurrent:
+          type: string
+        password:
+          type: string
+        passwordConfirm:
+          type: string
+      example:
+        passwordCurrent: "12"
+        password: "123"
+        passwordConfirm: "123"
+
+/api/v1/users/login:
+  post:
+    summary: Login.
+    tags: [Authentication]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/LoginUser"
+    responses:
+      200:
+        description: Login successfully.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginUser"
+      500:
+        description: Error.
+
+/api/v1/users/signup:
+  post:
+    summary: Sign up.
+    tags: [Authentication]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SignUpUser"
+    responses:
+      200:
+        description: Sign up successfully.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignUpUser"
+      500:
+        description: Error.
+
+/api/v1/users/updateMyPassword:
+  patch:
+    summary: Update Password.
+    tags: [Authentication]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdatePassword"
+    responses:
+      200:
+        description: Update successfully.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePassword"
+      500:
+        description: Error.

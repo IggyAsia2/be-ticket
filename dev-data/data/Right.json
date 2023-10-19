@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Get User",
+    "method": "GET",
+    "group": "65308d575d51dc298c81e356"
+  },
+  {
+    "name": "Create User",
+    "method": "POST",
+    "group": "65308d575d51dc298c81e356"
+  },
+  {
+    "name": "Update User",
+    "method": "PATCH",
+    "group": "65308d575d51dc298c81e356"
+  },
+  {
+    "name": "Delete User",
+    "method": "DELETE",
+    "group": "65308d575d51dc298c81e356"
+  }
+]

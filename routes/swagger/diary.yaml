@@ -1,0 +1,128 @@
+tags:
+  name: Diaries
+  description: The Diary managing API
+
+components:
+  schemas:
+    Diary:
+      type: object
+      required:
+        - title
+        - name
+      properties:
+        name:
+          type: string
+        driver:
+          type: string
+        partner:
+          type: string
+        requester:
+          type: string
+        departure:
+          type: string
+        startDate:
+          type: Date
+        finishDate:
+          type: Date
+        currentOdo:
+          type: Number
+        lastOdo:
+          type: Number
+        fillOilOdo:
+          type: Number
+        fillOilMoney:
+          type: Number
+        fee:
+          type: Number
+        truck:
+          type: String
+        arrivals:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: String
+              customer:
+                type: String
+              quantity:
+                type: Number
+              arrivalTime:
+                type: Date
+              product:
+                type: String
+      example:
+        name: cháu lên ba
+        driver: 62340d7b53bdaf273c18f5be
+        requester: 62340d4f53bdaf273c18f5bb
+        partner: Trung
+        departure: An Giang
+        startDate: 2022-03-17,10:00
+        finishDate: 2022-03-17,10:00
+        currentOdo: 1000
+        lastOdo: 1300
+        fillOilOdo: 1100
+        fillOilMoney: 2000000
+        fee: 500000
+        truck: 623737cec96461625c5e535d
+        arrivals:
+          - name: AG
+            customer: Khang
+            quantity: 20
+            arrivalTime: 2022-03-17,10:00
+            product: 623735c0c3309b129005eb81
+
+/api/v1/diaries:
+  # Get all diaries
+  get:
+    summary: Return the list of all diaries.
+    tags: [Diaries]
+    responses:
+      "200":
+        description: The list of the diaries.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Diary"
+
+  # Create diary
+  post:
+    summary: Create a diary.
+    tags: [Diaries]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Diary"
+    responses:
+      "200":
+        description: Create Successfully.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Diary"
+
+/api/v1/diaries/{id}:
+  # Get diary by id
+  get:
+    summary: Get diary by id.
+    tags: [Diaries]
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The diary id.
+    responses:
+      200:
+        description: The diary detail by id.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Diary"
+      404:
+        description: The diary is not found.

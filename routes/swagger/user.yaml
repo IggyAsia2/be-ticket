@@ -1,0 +1,48 @@
+tags:
+  name: Users
+  description: The User managing API
+
+components:
+  schemas:
+    UpdateUser:
+      type: object
+      required:
+        - name
+      properties:
+        name: string
+        role: string
+      example:
+        name: user2
+        role: user
+/api/v1/users:
+  # Get all users
+  get:
+    summary: Return the list of all user.
+    tags: [Users]
+    responses:
+      200:
+        description: The list of user.
+      500:
+        description: Error.
+
+/api/v1/users/updateMe:
+  # Update User
+  patch:
+    summary: Update information of user.
+    tags: [Users]
+    requestBody:
+      required: true
+      description: role *:["admin", "user", "driver"]*
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateUser"
+    responses:
+      200:
+        description: Update Successfully.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUser"
+      500:
+        description: Error.
