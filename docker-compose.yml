@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   app:
-    image: registry.gitlab.com/motconchimse1/manage_truck:latest
+    image: be-ticket-vintrip/express:v1
     build:
       dockerfile: Dockerfile
     container_name: ticket-vintrip-be
