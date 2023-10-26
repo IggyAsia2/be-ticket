@@ -3,9 +3,16 @@ version: "3.4"
 services:
   app:
     image: registry.gitlab.com/motconchimse1/manage_truck:latest
+    build:
+      dockerfile: Dockerfile
+    container_name: ticket-vintrip-be
     ports:
-      - "3000:3000"
+      - "3000:80"
     restart: unless-stopped
     env_file: .env
     volumes: 
       - ./coverage:/app/coverage
+networks:
+  default:
+    name: ols
+    external: true
