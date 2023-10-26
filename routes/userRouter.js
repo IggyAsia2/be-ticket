@@ -22,7 +22,8 @@ router.delete("/deleteMe", userController.deleteMe);
 router.get("/role/:id", userController.getRoleByUser);
 
 // Protect all routes after this middleware
-// router.use(authController.restrictTo("admin"));
+router.use(authController.protect);
+router.use(authController.restrictTo("admin"));
 
 router
   .route("/role")
@@ -32,6 +33,10 @@ router
   .route("/")
   .get(permission("Get User"), userController.getAllUsers)
   .post(permission("Create User"), userController.createUser);
+
+router
+  .route("/all")
+  .post(permission("Delete User"), userController.deleteManyUser);
 
 router
   .route("/:id")

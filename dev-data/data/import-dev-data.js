@@ -1,10 +1,10 @@
 const fs = require("fs");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-// const Diary = require("../../models/diaryModel");
-// const Arrival = require("../../models/arrivalModel");
+const BigTicket = require("../../models/bigTicketModel");
+const GroupTicket = require("../../models/groupTicketModel");
+const Ticket = require("../../models/ticketModel");
 const User = require("../../models/userModel");
-// const Product = require("../../models/productModel");
 // const Truck = require("../../models/truckModel");
 const Role = require("../../models/Permission/roleModel");
 const Right = require("../../models/Permission/rightModel");
@@ -39,17 +39,17 @@ const importData = async (model, bool) => {
         if (bool) await User.deleteMany();
         await User.create(items);
         break;
-      case "Product":
-        if (bool) await Product.deleteMany();
-        await Product.create(items);
+      case "Ticket":
+        if (bool) await Ticket.deleteMany();
+        await Ticket.create(items);
         break;
-      case "Diary":
-        if (bool) await Diary.deleteMany();
-        await Diary.create(items);
+      case "BigTicket":
+        if (bool) await BigTicket.deleteMany();
+        await BigTicket.create(items);
         break;
-      case "Arrival":
-        if (bool) await Arrival.deleteMany();
-        await Arrival.create(items);
+      case "GroupTicket":
+        if (bool) await GroupTicket.deleteMany();
+        await GroupTicket.create(items);
         break;
       case "Truck":
         if (bool) await Truck.deleteMany();
@@ -83,14 +83,14 @@ const deleteData = async (model) => {
       case "User":
         await User.deleteMany();
         break;
-      case "Product":
-        await Product.deleteMany();
+      case "Ticket":
+        await Ticket.deleteMany();
         break;
-      case "Diary":
-        await Diary.deleteMany();
+      case "BigTicket":
+        await BigTicket.deleteMany();
         break;
-      case "Arrival":
-        await Arrival.deleteMany();
+      case "GroupTicket":
+        await GroupTicket.deleteMany();
         break;
       case "Truck":
         await Truck.deleteMany();
@@ -117,14 +117,11 @@ const action = process.argv[2];
 
 switch (action) {
   case "--import":
-    if (process.argv[3] === "new") {
-      importData(modelName, true);
-    } else {
-      importData(modelName, false);
-    }
+    if (process.argv[3] === "new") importData(modelName, true);
+    if (process.argv[3] === "update") importData(modelName, false);
     break;
   case "--delete":
     deleteData(modelName);
     break;
 }
-// node ./dev-data/data/import-dev-data.js --import new Product
+// node ./dev-data/data/import-dev-data.js --import new Ticket

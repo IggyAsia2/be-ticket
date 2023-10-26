@@ -34,11 +34,8 @@ const createSendToken = (user, statusCode, res) => {
   user.password = undefined;
 
   res.status(statusCode).json({
-    status: "success",
     token,
-    // data: {
-    //   user,
-    // },
+    status: "success"
   });
 };
 
@@ -131,6 +128,7 @@ exports.restrictTo = (...roles) => {
 
     //rolse is an array
     // if (!roles.includes(doc.name)) {
+      // console.log(roles);
     if (!roles.includes(req.user.role.name)) {
       return next(
         new AppError("You do not have permission to perform this action", 403)
@@ -242,9 +240,11 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
     return next(new AppError("Your current password is wrong.", 401));
   }
-  
+
   if (await user.correctPassword(req.body.password, user.password)) {
-    return next(new AppError("Your new password is the same with current password.", 401));
+    return next(
+      new AppError("Your new password is the same with current password.", 401)
+    );
   }
 
   // 3) If so, update password

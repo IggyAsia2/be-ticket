@@ -15,26 +15,27 @@ const rightGroupSchema = new mongoose.Schema(
     // ],
   },
   {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
+    // toJSON: { virtuals: true },
+    // toObject: { virtuals: true },
+    versionKey: false
   }
 );
 // Aggregation Middleware
 
-rightGroupSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: "rights",
-    // select: "-__v",
-  });
-  next();
-});
+// rightGroupSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: "rights",
+//     // select: "-__v",
+//   });
+//   next();
+// });
 
 rightGroupSchema.virtual("rights", {
-  ref: "Right",
+  ref: "right",
   foreignField: "group",
   localField: "_id",
 });
 
-const RightGroup = mongoose.model("rightgroup", rightGroupSchema);
+const RightGroup = mongoose.model("rightGroup", rightGroupSchema);
 
 module.exports = RightGroup;

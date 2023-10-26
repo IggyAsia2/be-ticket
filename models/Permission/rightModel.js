@@ -14,18 +14,19 @@ const rightSchema = new mongoose.Schema(
     },
     group: {
       type: mongoose.Schema.ObjectId,
-      ref: "RightGroup",
+      ref: "rightGroup",
       required: [true, "A right must belong to a group"],
     },
   },
   {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
+    // toJSON: { virtuals: true },
+    // toObject: { virtuals: true },
+    versionKey: false
   }
 );
 
 // Aggregation Middleware
 
-const Right = mongoose.model("Right", rightSchema);
+const Right = mongoose.model("right", rightSchema);
 
 module.exports = Right;

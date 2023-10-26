@@ -81,6 +81,39 @@ exports.getRoleByUser = catchAsync(async (req, res, next) => {
 });
 
 exports.getUser = factory.getOne(User, "user");
-exports.createUser = factory.createOne(User);
+
+exports.createUser = catchAsync(async (req, res, next) => {
+  const data = {
+    password: "",
+    passwordConfirm: "",
+    ...req.body,
+  };
+  if (!req.body.password) {
+    data.password = "123456";
+    data.passwordConfirm = "123456";
+  }
+  console.log(data);
+  const doc = await User.create(data);
+  res.status(201).json({
+    status: "success",
+    data: doc,
+  });
+});
+
 exports.updateUser = factory.updateOne(User, "user");
+
 exports.deleteUser = factory.deleteOne(User, "user");
+
+exports.deleteManyUser = catchAsync(async (req, res, next) => {
+  const users = req.body.key;
+  if (users.length) {
+    for (let userId of users) {
+      await User.findByIdAndDelete(userId);
+    }
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: null,
+  });
+});

@@ -45,9 +45,30 @@ exports.updateOne = (Model, name) =>
 
     res.status(200).json({
       status: "success",
-      data: {
-        data: doc,
-      },
+      data: doc,
+    });
+  });
+
+exports.updateOneArray = (Model, name, ojay, popOptions) =>
+  catchAsync(async (req, res, next) => {
+    let query = Model.findByIdAndUpdate(
+      req.params.id,
+      { $addToSet: { [ojay]: req.body[ojay] } },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    if (popOptions) query.populate(popOptions);
+    const doc = await query;
+
+    if (!doc) {
+      return next(new AppError(`No ${name} found with that ID`, 404));
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: doc,
     });
   });
 
@@ -57,9 +78,7 @@ exports.createOne = (Model) =>
 
     res.status(201).json({
       status: "success",
-      data: {
-        data: doc,
-      },
+      data: doc,
     });
   });
 
@@ -79,19 +98,33 @@ exports.getOne = (Model, name, popOptions) =>
     });
   });
 
-exports.getAll = (Model, popOptions) =>
+exports.getAll = (Model, popOptions, virtualId) =>
   catchAsync(async (req, res, next) => {
     // To allow for nested GET arrivals on diary
+
     let filter = {};
-    if (req.params.diaryId) filter = { diary: req.params.diaryId };
+    if (req.params[virtualId]) filter = { [virtualId]: req.params[virtualId] };
     if (req.query.name) filter = { name: new RegExp(req.query.name, "i") };
     // Execute Query
-    const findAll = Model.find();
+    let total = 0;
+    await Model.countDocuments(
+      {
+        // age:{$gte:5}
+      },
+      function (err, count) {
+        if (err) {
+          console.log(err);
+        } else {
+          total = count;
+        }
+      }
+    );
 
     let query = Model.find(filter);
 
     if (popOptions) query.populate(popOptions);
 
+    console.log(req.query);
     const features = new APIFeatures(query, req.query)
       .filter()
       .sort()
@@ -109,11 +142,11 @@ exports.getAll = (Model, popOptions) =>
     // };
 
     const pagi = {
-      current: req.query.page * 1 || 1,
+      current: req.query.current * 1 || 1,
       // per_page: doc.length,
-      pageSize: req.query.per_page * 1 || 10,
+      pageSize: req.query.pageSize * 1 || 10,
       // num_page: Math.ceil((findAll.length / req.query.per_page) * 1) || 10,
-      total: findAll.length,
+      total,
     };
 
     res.status(200).json({

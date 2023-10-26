@@ -2,21 +2,41 @@
   {
     "name": "Get User",
     "method": "GET",
-    "group": "65308d575d51dc298c81e356"
+    "group": "6537467005dee446386d707d"
   },
   {
     "name": "Create User",
     "method": "POST",
-    "group": "65308d575d51dc298c81e356"
+    "group": "6537467005dee446386d707d"
   },
   {
     "name": "Update User",
     "method": "PATCH",
-    "group": "65308d575d51dc298c81e356"
+    "group": "6537467005dee446386d707d"
   },
   {
     "name": "Delete User",
     "method": "DELETE",
-    "group": "65308d575d51dc298c81e356"
+    "group": "6537467005dee446386d707d"
+  },
+  {
+    "name": "Get GroupTicket",
+    "method": "GET",
+    "group": "653746c64d27635b5c9db4af"
+  },
+  {
+    "name": "Create GroupTicket",
+    "method": "POST",
+    "group": "653746c64d27635b5c9db4af"
+  },
+  {
+    "name": "Update GroupTicket",
+    "method": "PATCH",
+    "group": "653746c64d27635b5c9db4af"
+  },
+  {
+    "name": "Delete GroupTicket",
+    "method": "DELETE",
+    "group": "653746c64d27635b5c9db4af"
   }
 ]

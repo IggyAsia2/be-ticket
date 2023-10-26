@@ -12,6 +12,8 @@ router
   .get(roleController.getAllRoles)
   .post(roleController.createRole);
 
+router.route("/roleList").get(roleController.getRoleList);
+
 router
   .route("/:id")
   .get(roleController.getRole)

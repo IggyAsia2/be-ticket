@@ -10,14 +10,15 @@ const roleSchema = new mongoose.Schema(
     rights: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: "Right",
+        ref: "right",
+        // select: "name"
         select: false
       },
     ],
   },
   {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
+    // toJSON: { virtuals: true },
+    // toObject: { virtuals: true },
     versionKey: false 
   },
 );
