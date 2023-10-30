@@ -3,7 +3,7 @@ const slugify = require("slugify");
 
 const bigTicketSchema = new mongoose.Schema(
   {
-    bigTicket: {
+    name: {
       type: String,
       required: [true, "A Big ticket must have a name"],
       unique: true,
@@ -39,12 +39,12 @@ const bigTicketSchema = new mongoose.Schema(
 
 bigTicketSchema.virtual("groupTickets", {
   ref: "groupTicket",
-  foreignField: "bigTicketId",
+  foreignField: "bigTicket",
   localField: "_id",
 });
 
 bigTicketSchema.pre("save", function (next) {
-  this.slug = slugify(this.bigTicket, { lower: true });
+  this.slug = slugify(this.name, { lower: true });
   next();
 });
 

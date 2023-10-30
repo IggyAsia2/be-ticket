@@ -9,7 +9,7 @@ const router = express.Router({ mergeParams: true });
 router.use(authController.protect);
 router.use(authController.restrictTo("admin"));
 
-router.use("/:groupTicketId/tickets", ticketRouter);
+router.use("/:groupTicket/tickets", ticketRouter);
 
 router
   .route("/")

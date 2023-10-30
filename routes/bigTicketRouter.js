@@ -11,7 +11,7 @@ const router = express.Router();
 router.use(authController.protect);
 router.use(authController.restrictTo("admin"));
 
-router.use("/:bigTicketId/groupTickets", groupTicketRouter);
+router.use("/:bigTicket/groupTickets", groupTicketRouter);
 
 router
   .route("/")

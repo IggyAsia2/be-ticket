@@ -1,16 +1,18 @@
 [
   {
-    "groupTicket": "Vé Cáp treo 2 chiều + Vé vui chơi",
-    "bigTicketId": "653646476c8f88281c6ce072",
+    "name": "Vé Cáp treo 2 chiều + Vé vui chơi",
+    "bigTicket": "653f1f476655b10becce2d63",
     "sku": "CXR00101",
     "unit": "Adult",
-    "stock": 20
+    "stock": 20,
+    "price": 500000
   },
   {
-    "groupTicket": "Vé Cáp treo 2 chiều + Vé vui chơi",
-    "bigTicketId": "653646476c8f88281c6ce072",
+    "name": "Vé Cáp treo 2 chiều + Vé vui chơi",
+    "bigTicket": "653f1f476655b10becce2d63",
     "sku": "CXR00102",
     "unit": "Child",
-    "stock": 10
+    "stock": 10,
+    "price": 350000
   }
 ]

@@ -8,7 +8,7 @@ const TicketSchema = new mongoose.Schema(
       required: [true, "A Ticket must have a name"],
     },
     slug: String,
-    groupTicketId: {
+    groupTicket: {
       type: mongoose.Schema.ObjectId,
       ref: "groupTicket",
       required: [true, "A Ticket must belong to a Group Ticket"],
@@ -29,11 +29,21 @@ const TicketSchema = new mongoose.Schema(
     },
     activatedDate: {
       type: Date,
-      required: [true, "An arrival must have an Activated Date"],
+      required: [true, "A Ticket must have have an Activated Date"],
     },
     expiredDate: {
       type: Date,
-      required: [true, "An arrival must have an Expired Date"],
+      required: [true, "A Ticket must have have an Expired Date"],
+    },
+    state: {
+      type: String,
+      enum: ['Delivered', 'Pending'],
+      required: [true, "A Ticket must have a state"],
+      default: 'Pending'
+    },
+    importUser: {
+      type: String,
+      required: [true, "A Ticket must have an Import User"],
     },
     createdAt: {
       type: Date,
@@ -48,6 +58,16 @@ const TicketSchema = new mongoose.Schema(
     versionKey: false
   }
 );
+
+// Query Middleware
+// TicketSchema.pre(/^find/, function (next) {
+//   // All string start with find
+//   this.populate({
+//     path: "groupTicket",
+//     select: "-__v bigTicket",
+//   });
+//   next();
+// });
 
 TicketSchema.pre("save", function (next) {
   this.slug = slugify(this.name, { lower: true });
