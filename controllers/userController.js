@@ -105,10 +105,10 @@ exports.updateUser = factory.updateOne(User, "user");
 exports.deleteUser = factory.deleteOne(User, "user");
 
 exports.deleteManyUser = catchAsync(async (req, res, next) => {
-  const users = req.body.key;
-  if (users.length) {
-    for (let userId of users) {
-      await User.findByIdAndDelete(userId);
+  const data = req.body.key;
+  if (data.length) {
+    for (let id of data) {
+      await User.findByIdAndDelete(id);
     }
   }
 

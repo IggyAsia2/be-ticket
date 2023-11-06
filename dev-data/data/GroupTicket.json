@@ -4,7 +4,6 @@
     "bigTicket": "653f1f476655b10becce2d63",
     "sku": "CXR00101",
     "unit": "Adult",
-    "stock": 20,
     "price": 500000
   },
   {
@@ -12,7 +11,13 @@
     "bigTicket": "653f1f476655b10becce2d63",
     "sku": "CXR00102",
     "unit": "Child",
-    "stock": 10,
     "price": 350000
+  },
+  {
+    "name": "Vé cáp treo",
+    "bigTicket": "65407895cb7fa743fc7b4e33",
+    "sku": "CXR00100",
+    "unit": "Elder",
+    "price": 250000
   }
 ]

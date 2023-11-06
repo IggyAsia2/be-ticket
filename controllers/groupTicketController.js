@@ -1,5 +1,9 @@
 const GroupTicket = require("../models/groupTicketModel");
+const Ticket = require("../models/ticketModel");
 const factory = require("./handlerFactory");
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
+const APIFeatures = require("../utils/apiFeatures");
 
 exports.setBigTicketUserIds = (req, res, next) => {
   // Allow nested routes
@@ -8,15 +12,139 @@ exports.setBigTicketUserIds = (req, res, next) => {
   next();
 };
 
-exports.getAllGroupTickets = factory.getAll(
-  GroupTicket,
-  null,
-  // { path: "tickets" },
-  "bigTicket"
-);
+// exports.getAllGroupTickets = factory.getAll(
+//   GroupTicket,
+//   null,
+//   "bigTicket"
+// );
+exports.getAllGroupTickets = catchAsync(async (req, res, next) => {
+  let filter = {};
+  if (req.params.bigTicket) filter = { bigTicket: req.params.bigTicket };
+  if (req.query.name) filter = { name: new RegExp(req.query.name, "i") };
+  const total = await GroupTicket.countDocuments();
+
+  let query = GroupTicket.find(filter);
+
+  const features = new APIFeatures(query, req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .pagination();
+
+  const doc = await features.query;
+
+  async function stockFunc() {
+    return doc.map(async (el) => {
+      const numberDelivered = await Ticket.where({
+        groupTicket: el._id,
+        state: "Delivered",
+      }).countDocuments();
+      const numberPending = await Ticket.where({
+        groupTicket: el._id,
+        state: "Pending",
+      }).countDocuments();
+      return {
+        ...el._doc,
+        delivered: numberDelivered,
+        pending: numberPending,
+      };
+    });
+  }
+
+  stockFunc()
+    .then((data) => Promise.all(data))
+    .then((newDoc) =>
+      res.status(200).json({
+        status: "success",
+        current: req.query.current * 1 || 1,
+        pageSize: req.query.pageSize * 1 || 10,
+        total: newDoc.length,
+        data: newDoc,
+      })
+    )
+    .catch((err) => console.error(err));
+});
 exports.getGroupTicket = factory.getOne(GroupTicket, "groupTickets", {
   path: "tickets",
 });
 exports.createGroupTicket = factory.createOne(GroupTicket);
 exports.updateGroupTicket = factory.updateOne(GroupTicket, "groupTicket");
-exports.deleteGroupTicket = factory.deleteOne(GroupTicket, "groupTicket");
+exports.updateStock = catchAsync(async (req, res, next) => {
+  const numberStock = await Ticket.where({
+    groupTicket: req.params.id,
+    state: "Delivered",
+  }).countDocuments();
+
+  const doc = await GroupTicket.findByIdAndUpdate(
+    req.params.id,
+    {
+      stock: numberStock,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!doc) {
+    return next(new AppError(`No ${name} found with that ID`, 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: doc,
+  });
+});
+exports.deleteGroupTicket = factory.deleteParentAndChildren(
+  GroupTicket,
+  Ticket,
+  "groupTicket"
+);
+// exports.deleteMany = factory.deleteMany(GroupTicket);
+
+exports.exportTicket = catchAsync(async (req, res, next) => {
+  for (let i = 0; i < req.body.numberTickets; i++) {
+    await Ticket.findOneAndUpdate(
+      { groupTicket: req.body.ticketId, state: "Pending" },
+      { state: "Delivered", issuedDate: Date.now() }
+    );
+  }
+  res.status(200).json({
+    status: "success",
+    data: null,
+  });
+});
+
+exports.deleteMany = catchAsync(async (req, res, next) => {
+  const data = req.body.key;
+  if (data.length) {
+    for (let id of data) {
+      const parent = await GroupTicket.findByIdAndDelete(id);
+      if (parent) {
+        await Ticket.deleteMany({ groupTicket: id });
+      } else {
+        return next(new AppError(`No groupTicket found with that ID`, 404));
+      }
+    }
+  }
+  res.status(200).json({
+    status: "success",
+    data: null,
+  });
+});
+
+exports.getAllForImport = catchAsync(async (req, res, next) => {
+  let filter = {};
+  if (req.query.name) filter = { name: new RegExp(req.query.name, "i") };
+  let query = GroupTicket.find(filter);
+  const features = new APIFeatures(query, req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .pagination();
+  const doc = await features.query;
+  res.status(200).json({
+    status: "success",
+    data: doc,
+  });
+});

@@ -1,5 +1,5 @@
 const express = require("express");
-const ticketController = require("../controllers/ticketController");
+const orderController = require("../controllers/orderController");
 const authController = require("../controllers/authController");
 const { permission } = authController;
 
@@ -14,31 +14,27 @@ router
   .route("/")
   .get(
     // permission("Get Ticket"),
-    ticketController.getAllTickets
+    orderController.getAllOrders
   )
   .post(
     // permission("Create Ticket"),
-    ticketController.createTicket
+    orderController.createOrder
   );
 
-router.route("/all").post(ticketController.deleteMany);
-
-router.route("/import").post(ticketController.importTicket);
 
 router
   .route("/:id")
   .get(
     // permission("Get Ticket"),
-    ticketController.setGroupTicketUserIds,
-    ticketController.getTicket
+    orderController.getOrder
   )
   .patch(
     // permission("Update Ticket"),
-    ticketController.updateTicket
+    orderController.updateOrder
   )
   .delete(
     // permission("Delete Ticket"),
-    ticketController.deleteTicket
+    orderController.deleteOrder
   );
 
 module.exports = router;

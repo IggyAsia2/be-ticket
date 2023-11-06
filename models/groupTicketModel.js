@@ -12,7 +12,7 @@ const groupTicketSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: "bigTicket",
       required: [true, "A Group Ticket must belong to a Big Ticket"],
-      select: false,
+      select: true,
     },
     sku: {
       type: String,
@@ -22,12 +22,12 @@ const groupTicketSchema = new mongoose.Schema(
     unit: {
       type: String,
       required: [true, "A Group ticket must have an unit"],
-      enum: ["Adult", "Child", "Senior"],
+      enum: ["Adult", "Child", "Elder"],
       default: "Adult",
     },
     stock: {
       type: Number,
-      required: [true, "A Group Ticket must have a stock"],
+      // required: [true, "A Group Ticket must have a stock"],
     },
     price: {
       type: Number,
@@ -48,14 +48,8 @@ groupTicketSchema.virtual("tickets", {
   localField: "_id",
 });
 
-// Query Middleware
 groupTicketSchema.pre(/^find/, function (next) {
-  // All string start with find
   this.populate("bigTicket", "name");
-  // this.populate({
-  //   path: "arrivals.product",
-  //   select: "-__v",
-  // });
   next();
 });
 

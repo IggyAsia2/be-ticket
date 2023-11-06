@@ -14,8 +14,9 @@ router.use("/:groupTicket/tickets", ticketRouter);
 router
   .route("/")
   .get(
-    // permission("Get GroupTicket"), 
-  groupTicketController.getAllGroupTickets)
+    // permission("Get GroupTicket"),
+    groupTicketController.getAllGroupTickets
+  )
   .post(
     // permission("Create GroupTicket"),
     groupTicketController.setBigTicketUserIds,
@@ -23,14 +24,26 @@ router
   );
 
 router
+  .route("/all")
+  .get(groupTicketController.getAllForImport)
+  .post(groupTicketController.deleteMany);
+
+router.route("/export").post(groupTicketController.exportTicket);
+
+router.route("/stock/:id").get(groupTicketController.updateStock);
+
+router
   .route("/:id")
   .get(
-    // permission("Get GroupTicket"), 
-  groupTicketController.getGroupTicket)
+    // permission("Get GroupTicket"),
+    groupTicketController.getGroupTicket
+  )
   .patch(
-    // permission("Update GroupTicket"), 
-  groupTicketController.updateGroupTicket)
+    // permission("Update GroupTicket"),
+    groupTicketController.updateGroupTicket
+  )
   .delete(
-    // permission("Delete GroupTicket"), 
-  groupTicketController.deleteGroupTicket);
+    // permission("Delete GroupTicket"),
+    groupTicketController.deleteGroupTicket
+  );
 module.exports = router;

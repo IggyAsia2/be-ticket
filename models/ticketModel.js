@@ -16,14 +16,14 @@ const TicketSchema = new mongoose.Schema(
     serial: {
       type: String,
       unique: true,
-      required: [true, "A Ticket must have a serial"]
+      required: [true, "A Ticket must have a serial"],
     },
     code: {
       type: String,
       unique: true,
       required: [true, "A Ticket must have a code"],
     },
-    purchaseId:{
+    purchaseId: {
       type: String,
       required: [true, "A Ticket must have a purchaseId"],
     },
@@ -35,11 +35,15 @@ const TicketSchema = new mongoose.Schema(
       type: Date,
       required: [true, "A Ticket must have have an Expired Date"],
     },
+    issuedDate: {
+      type: Date,
+      // required: [true, "A Ticket must have have an Issued Date"],
+    },
     state: {
       type: String,
-      enum: ['Delivered', 'Pending'],
+      enum: ["Delivered", "Pending"],
       required: [true, "A Ticket must have a state"],
-      default: 'Pending'
+      default: "Pending",
     },
     importUser: {
       type: String,
@@ -48,26 +52,22 @@ const TicketSchema = new mongoose.Schema(
     createdAt: {
       type: Date,
       default: Date.now(),
-      select: false,  
       // if you want to hide
     },
   },
   {
     // toJSON: { virtuals: true },
     // toObject: { virtuals: true },
-    versionKey: false
+    versionKey: false,
   }
 );
 
 // Query Middleware
-// TicketSchema.pre(/^find/, function (next) {
-//   // All string start with find
-//   this.populate({
-//     path: "groupTicket",
-//     select: "-__v bigTicket",
-//   });
-//   next();
-// });
+TicketSchema.pre(/^find/, function (next) {
+  // All string start with find
+  this.populate("groupTicket", ["name", "sku", "unit"]);
+  next();
+});
 
 TicketSchema.pre("save", function (next) {
   this.slug = slugify(this.name, { lower: true });

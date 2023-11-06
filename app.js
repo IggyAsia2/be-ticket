@@ -13,6 +13,7 @@ const userRouter = require("./routes/userRouter.js");
 const bigTicketRouter = require("./routes/bigTicketRouter");
 const groupTicketRouter = require("./routes/groupTicketRouter");
 const ticketRouter = require("./routes/ticketRouter");
+const orderRouter = require("./routes/orderRouter.js");
 const roleRouter = require("./routes/Permission/roleRouter");
 const rightRouter = require("./routes/Permission/rightRouter");
 const rightGroupRouter = require("./routes/Permission/rightGroupRouter");
@@ -70,7 +71,6 @@ app.use((req, res, next) => {
 });
 
 // ****Create API Document
-
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
@@ -80,6 +80,7 @@ app.use("/api/v1/bigTickets", bigTicketRouter);
 app.use("/api/v1/groupTickets", groupTicketRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/tickets", ticketRouter);
+app.use("/api/v1/orders", orderRouter);
 // app.use("/api/v1/trucks", truckRouter);
 
 app.use("/api/v1/roles", roleRouter);

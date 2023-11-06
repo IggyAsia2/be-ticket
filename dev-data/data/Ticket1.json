@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Vé tham quan",
+    "groupTicket": "653f33267bd34a061845d91d",
+    "serial": "2018763686a",
+    "code": "2018763686b",
+    "purchaseId": "6310212416NT",
+    "activatedDate": "2021-03-30T00:03:33Z",
+    "expiredDate": "2021-05-30T00:03:33Z",
+    "state": "Delivered",
+    "importUser": "pcvbaoit@gmail.com"
+  },
+  {
+    "name": "Vé tham quan",
+    "groupTicket": "653f33267bd34a061845d91d",
+    "serial": "2018763686b",
+    "code": "2018763686c",
+    "purchaseId": "6310212416NT",
+    "activatedDate": "2021-03-30T00:03:33Z",
+    "expiredDate": "2021-05-30T00:03:33Z",
+    "importUser": "pcvbaoit@gmail.com"
+  },
+  {
+    "name": "Vé tham quan",
+    "groupTicket": "653f33267bd34a061845d91d",
+    "serial": "2018763686c",
+    "code": "2018763686d",
+    "purchaseId": "6310212416NT",
+    "activatedDate": "2021-03-30T00:03:33Z",
+    "expiredDate": "2021-05-30T00:03:33Z",
+    "importUser": "pcvbaoit@gmail.com"
+  },
+  {
+    "name": "Vé tham quan",
+    "groupTicket": "653f33267bd34a061845d91d",
+    "serial": "aaaaaaaaa",
+    "code": "aaaaaaaa",
+    "purchaseId": "6310212416NT",
+    "activatedDate": "2021-03-30T00:03:33Z",
+    "expiredDate": "2021-05-30T00:03:33Z",
+    "importUser": "pcvbaoit@gmail.com"
+  }
+]

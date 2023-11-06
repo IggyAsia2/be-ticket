@@ -7,7 +7,7 @@ exports.deleteParentAndChildren = (ModelParent, ModalChild, name) =>
     const parent = await ModelParent.findByIdAndDelete(req.params.id);
 
     if (parent) {
-      await ModalChild.deleteMany({ diary: req.params.id });
+      await ModalChild.deleteMany({ [name]: req.params.id });
     } else {
       return next(new AppError(`No ${name} found with that ID`, 404));
     }
@@ -24,6 +24,21 @@ exports.deleteOne = (Model, name) =>
 
     if (!doc) {
       return next(new AppError(`No ${name} found with that ID`, 404));
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: null,
+    });
+  });
+
+exports.deleteMany = (Model) =>
+  catchAsync(async (req, res, next) => {
+    const data = req.body.key;
+    if (data.length) {
+      for (let id of data) {
+        await Model.findByIdAndDelete(id);
+      }
     }
 
     res.status(200).json({
@@ -106,25 +121,11 @@ exports.getAll = (Model, popOptions, virtualId) =>
     if (req.params[virtualId]) filter = { [virtualId]: req.params[virtualId] };
     if (req.query.name) filter = { name: new RegExp(req.query.name, "i") };
     // Execute Query
-    let total = 0;
-    await Model.countDocuments(
-      {
-        // age:{$gte:5}
-      },
-      function (err, count) {
-        if (err) {
-          console.log(err);
-        } else {
-          total = count;
-        }
-      }
-    );
 
     let query = Model.find(filter);
 
     if (popOptions) query.populate(popOptions);
 
-    console.log(req.query);
     const features = new APIFeatures(query, req.query)
       .filter()
       .sort()
@@ -133,20 +134,10 @@ exports.getAll = (Model, popOptions, virtualId) =>
 
     const doc = await features.query;
 
-    // const pagination = {
-    //   page: req.query.page * 1 || 1,
-    //   per_page: doc.length,
-    //   virtual_per_page: req.query.per_page * 1 || 10,
-    //   num_page: Math.ceil((findAll.length / req.query.per_page) * 1) || 10,
-    //   total: findAll.length,
-    // };
-
     const pagi = {
       current: req.query.current * 1 || 1,
-      // per_page: doc.length,
       pageSize: req.query.pageSize * 1 || 10,
-      // num_page: Math.ceil((findAll.length / req.query.per_page) * 1) || 10,
-      total,
+      total: doc.length,
     };
 
     res.status(200).json({

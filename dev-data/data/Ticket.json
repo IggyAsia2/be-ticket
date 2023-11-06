@@ -1,43 +1,10 @@
-[
-  {
-    "name": "Vé tham quan",
-    "groupTicket": "653f33267bd34a061845d91d",
-    "serial": "2018763686a",
-    "code": "2018763686b",
-    "purchaseId": "6310212416NT",
-    "activatedDate": "2021-03-30T00:03:33Z",
-    "expiredDate": "2021-05-30T00:03:33Z",
-    "state": "Delivered",
-    "importUser": "pcvbaoit@gmail.com"
-  },
-  {
-    "name": "Vé tham quan",
-    "groupTicket": "653f33267bd34a061845d91d",
-    "serial": "2018763686b",
-    "code": "2018763686c",
-    "purchaseId": "6310212416NT",
-    "activatedDate": "2021-03-30T00:03:33Z",
-    "expiredDate": "2021-05-30T00:03:33Z",
-    "importUser": "pcvbaoit@gmail.com"
-  },
-  {
-    "name": "Vé tham quan",
-    "groupTicket": "653f33267bd34a061845d91d",
-    "serial": "2018763686c",
-    "code": "2018763686d",
-    "purchaseId": "6310212416NT",
-    "activatedDate": "2021-03-30T00:03:33Z",
-    "expiredDate": "2021-05-30T00:03:33Z",
-    "importUser": "pcvbaoit@gmail.com"
-  },
-  {
-    "name": "Vé tham quan",
-    "groupTicket": "653f33267bd34a061845d91d",
-    "serial": "aaaaaaaaa",
-    "code": "aaaaaaaa",
-    "purchaseId": "6310212416NT",
-    "activatedDate": "2021-03-30T00:03:33Z",
-    "expiredDate": "2021-05-30T00:03:33Z",
-    "importUser": "pcvbaoit@gmail.com"
-  }
-]
+[{"name":"aspirin","groupTicket":"65449f03e585f83204593cbf","serial":"722941501-2","code":"#18232d","purchaseId":"#eca","activatedDate":"2023-11-09T20:53:55Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
+{"name":"ACYCLOVIR","groupTicket":"65449f03e585f83204593cc0","serial":"304428967-X","code":"#1e9049","purchaseId":"#a0f","activatedDate":"2023-11-09T02:54:41Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
+{"name":"Fusarium compactum","groupTicket":"65449f03e585f83204593cc0","serial":"134522172-X","code":"#599d6d","purchaseId":"#f00","activatedDate":"2023-11-06T03:07:28Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
+{"name":"Venlafaxine","groupTicket":"65449f03e585f83204593cbe","serial":"272384887-6","code":"#1ea5b1","purchaseId":"#2bd","activatedDate":"2023-11-06T01:03:46Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
+{"name":"Lidocaine Hydrochloride","groupTicket":"65449f03e585f83204593cc0","serial":"263293082-0","code":"#f3a5da","purchaseId":"#af6","activatedDate":"2023-11-08T04:22:27Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
+{"name":"Ceftriaxone","groupTicket":"65449f03e585f83204593cbf","serial":"961917749-5","code":"#2bde4e","purchaseId":"#9e7","activatedDate":"2023-11-07T09:22:37Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
+{"name":"Gas Relief","groupTicket":"65449f03e585f83204593cbe","serial":"542939783-0","code":"#6dd593","purchaseId":"#f25","activatedDate":"2023-11-09T07:11:42Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
+{"name":"Glyburide (micronized) and Metformin Hydrochloride","groupTicket":"65449f03e585f83204593cbf","serial":"831231809-7","code":"#c092b7","purchaseId":"#1ca","activatedDate":"2023-11-04T14:09:17Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
+{"name":"COLGATE SPARKLING WHITE CINNAMINT","groupTicket":"65449f03e585f83204593cbf","serial":"741652809-7","code":"#9a6680","purchaseId":"#374","activatedDate":"2023-11-09T11:31:40Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
+{"name":"Glipizide","groupTicket":"65449f03e585f83204593cbf","serial":"166112666-9","code":"#8ed687","purchaseId":"#089","activatedDate":"2023-11-08T22:14:08Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"}]
