@@ -21,6 +21,7 @@ router
     orderController.createOrder
   );
 
+router.route("/all").post(orderController.deleteMany);
 
 router
   .route("/:id")

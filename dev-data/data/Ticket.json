@@ -1,10 +1,112 @@
-[{"name":"aspirin","groupTicket":"65449f03e585f83204593cbf","serial":"722941501-2","code":"#18232d","purchaseId":"#eca","activatedDate":"2023-11-09T20:53:55Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
-{"name":"ACYCLOVIR","groupTicket":"65449f03e585f83204593cc0","serial":"304428967-X","code":"#1e9049","purchaseId":"#a0f","activatedDate":"2023-11-09T02:54:41Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
-{"name":"Fusarium compactum","groupTicket":"65449f03e585f83204593cc0","serial":"134522172-X","code":"#599d6d","purchaseId":"#f00","activatedDate":"2023-11-06T03:07:28Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
-{"name":"Venlafaxine","groupTicket":"65449f03e585f83204593cbe","serial":"272384887-6","code":"#1ea5b1","purchaseId":"#2bd","activatedDate":"2023-11-06T01:03:46Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
-{"name":"Lidocaine Hydrochloride","groupTicket":"65449f03e585f83204593cc0","serial":"263293082-0","code":"#f3a5da","purchaseId":"#af6","activatedDate":"2023-11-08T04:22:27Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
-{"name":"Ceftriaxone","groupTicket":"65449f03e585f83204593cbf","serial":"961917749-5","code":"#2bde4e","purchaseId":"#9e7","activatedDate":"2023-11-07T09:22:37Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
-{"name":"Gas Relief","groupTicket":"65449f03e585f83204593cbe","serial":"542939783-0","code":"#6dd593","purchaseId":"#f25","activatedDate":"2023-11-09T07:11:42Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
-{"name":"Glyburide (micronized) and Metformin Hydrochloride","groupTicket":"65449f03e585f83204593cbf","serial":"831231809-7","code":"#c092b7","purchaseId":"#1ca","activatedDate":"2023-11-04T14:09:17Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
-{"name":"COLGATE SPARKLING WHITE CINNAMINT","groupTicket":"65449f03e585f83204593cbf","serial":"741652809-7","code":"#9a6680","purchaseId":"#374","activatedDate":"2023-11-09T11:31:40Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"},
-{"name":"Glipizide","groupTicket":"65449f03e585f83204593cbf","serial":"166112666-9","code":"#8ed687","purchaseId":"#089","activatedDate":"2023-11-08T22:14:08Z","expiredDate":"2024-01-01T00:00:00Z","state":"Pending","importUser":"pcvbaoit@gmail.com"}]
+[
+  {
+    "name": "Furosemide",
+    "groupTicket": "65449f03e585f83204593cbf",
+    "serial": "988481215-2",
+    "code": "#d766c7",
+    "purchaseId": "#45e",
+    "activatedDate": "2023-11-18T10:17:17Z",
+    "expiredDate": "2024-01-06T19:52:19Z",
+    "state": "Pending",
+    "importUser": "pcvbaoit@gmail.com"
+  },
+  {
+    "name": "Avandia",
+    "groupTicket": "65449f03e585f83204593cc0",
+    "serial": "158586358-0",
+    "code": "#9c3ffa",
+    "purchaseId": "#ac5",
+    "activatedDate": "2023-11-15T16:35:49Z",
+    "expiredDate": "2024-01-22T11:27:58Z",
+    "state": "Pending",
+    "importUser": "pcvbaoit@gmail.com"
+  },
+  {
+    "name": "Pregnancy Balance",
+    "groupTicket": "65449f03e585f83204593cc0",
+    "serial": "618711805-7",
+    "code": "#35bdcc",
+    "purchaseId": "#9b1",
+    "activatedDate": "2023-11-18T12:31:29Z",
+    "expiredDate": "2024-01-18T17:23:42Z",
+    "state": "Pending",
+    "importUser": "pcvbaoit@gmail.com"
+  },
+  {
+    "name": "Womens Laxative",
+    "groupTicket": "65449f03e585f83204593cbf",
+    "serial": "468157785-5",
+    "code": "#8d2295",
+    "purchaseId": "#9ff",
+    "activatedDate": "2023-11-15T01:55:43Z",
+    "expiredDate": "2024-01-20T17:22:00Z",
+    "state": "Pending",
+    "importUser": "pcvbaoit@gmail.com"
+  },
+  {
+    "name": "Sun-Kissed Lip Balm",
+    "groupTicket": "65449f03e585f83204593cc0",
+    "serial": "572998841-9",
+    "code": "#286b71",
+    "purchaseId": "#ce9",
+    "activatedDate": "2023-11-17T14:47:54Z",
+    "expiredDate": "2024-01-18T09:03:03Z",
+    "state": "Pending",
+    "importUser": "pcvbaoit@gmail.com"
+  },
+  {
+    "name": "Octreotide",
+    "groupTicket": "65449f03e585f83204593cbe",
+    "serial": "288753622-2",
+    "code": "#cd604b",
+    "purchaseId": "#c7d",
+    "activatedDate": "2023-11-16T19:33:31Z",
+    "expiredDate": "2024-01-08T21:05:36Z",
+    "state": "Pending",
+    "importUser": "pcvbaoit@gmail.com"
+  },
+  {
+    "name": "ofloxacin",
+    "groupTicket": "65449f03e585f83204593cbf",
+    "serial": "052719274-0",
+    "code": "#54cfbb",
+    "purchaseId": "#ded",
+    "activatedDate": "2023-11-15T10:02:45Z",
+    "expiredDate": "2024-01-19T17:22:00Z",
+    "state": "Pending",
+    "importUser": "pcvbaoit@gmail.com"
+  },
+  {
+    "name": "NARS ALL DAY LUMINOUS FOUNDATION",
+    "groupTicket": "65449f03e585f83204593cbe",
+    "serial": "933834423-1",
+    "code": "#82a3dd",
+    "purchaseId": "#80a",
+    "activatedDate": "2023-11-21T07:08:01Z",
+    "expiredDate": "2024-01-24T06:28:36Z",
+    "state": "Pending",
+    "importUser": "pcvbaoit@gmail.com"
+  },
+  {
+    "name": "Good Sense Nicotine",
+    "groupTicket": "65449f03e585f83204593cbf",
+    "serial": "243321436-X",
+    "code": "#6c31c1",
+    "purchaseId": "#0d5",
+    "activatedDate": "2023-11-19T03:29:57Z",
+    "expiredDate": "2024-01-02T08:32:53Z",
+    "state": "Pending",
+    "importUser": "pcvbaoit@gmail.com"
+  },
+  {
+    "name": "HAWAIIAN Tropic",
+    "groupTicket": "65449f03e585f83204593cbe",
+    "serial": "351004693-5",
+    "code": "#9d303d",
+    "purchaseId": "#f3e",
+    "activatedDate": "2023-11-18T22:18:27Z",
+    "expiredDate": "2024-01-06T22:35:49Z",
+    "state": "Pending",
+    "importUser": "pcvbaoit@gmail.com"
+  }
+]

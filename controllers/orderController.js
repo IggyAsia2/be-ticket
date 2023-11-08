@@ -2,7 +2,7 @@ const Order = require("../models/orderModer");
 const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
 
-exports.getAllOrders = factory.getAll(Order);
+exports.getAllOrders = factory.getAll(Order, null, "groupTicket");
 exports.getOrder = factory.getOne(Order, "order");
 exports.createOrder = catchAsync(async (req, res, next) => {
   let lastPost = await Order.find({ _id: { $exists: true } })
@@ -27,3 +27,4 @@ exports.createOrder = catchAsync(async (req, res, next) => {
 exports.updateOrder = factory.updateOne(Order, "order");
 
 exports.deleteOrder = factory.deleteOne(Order, "order");
+exports.deleteMany = factory.deleteMany(Order);

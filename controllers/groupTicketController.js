@@ -1,9 +1,12 @@
 const GroupTicket = require("../models/groupTicketModel");
 const Ticket = require("../models/ticketModel");
+const Order = require("../models/orderModer");
 const factory = require("./handlerFactory");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const APIFeatures = require("../utils/apiFeatures");
+const startOfDay = require("date-fns/startOfDay");
+const endOfDay = require("date-fns/endOfDay");
 
 exports.setBigTicketUserIds = (req, res, next) => {
   // Allow nested routes
@@ -103,15 +106,51 @@ exports.deleteGroupTicket = factory.deleteParentAndChildren(
 // exports.deleteMany = factory.deleteMany(GroupTicket);
 
 exports.exportTicket = catchAsync(async (req, res, next) => {
-  for (let i = 0; i < req.body.numberTickets; i++) {
+  const { data, numberTickets, ticketId, exportUser } = req.body;
+  const { customerName, customerEmail, customerPhone, bookDate, quantity } =
+    data;
+  const newdate = bookDate.split("/").reverse().join("/");
+  for (let i = 0; i < numberTickets; i++) {
+    const endDate = startOfDay(new Date(newdate));
+    const startDate = endOfDay(new Date(newdate));
     await Ticket.findOneAndUpdate(
-      { groupTicket: req.body.ticketId, state: "Pending" },
-      { state: "Delivered", issuedDate: Date.now() }
+      {
+        groupTicket: ticketId,
+        state: "Pending",
+        activatedDate: { $lte: startDate },
+        expiredDate: { $gte: endDate },
+      },
+      { state: "Delivered", issuedDate: Date.now() },
+      { sort: { expiredDate: 1 } }
     );
+  }
+
+  let lastPost = await Order.find({ _id: { $exists: true } })
+    .sort({ _id: -1 })
+    .limit(1);
+  let doc;
+  if (Array.isArray(lastPost) && lastPost.length > 0) {
+    lastPost = lastPost[0];
+    doc = await Order.create({
+      ...data,
+      bookDate: newdate,
+      exportUser,
+      paidDate: Date.now(),
+      groupTicket: ticketId,
+      orderId: lastPost["orderId"] + 1,
+    });
+  } else {
+    doc = await Order.create({
+      ...data,
+      bookDate: newdate,
+      exportUser,
+      paidDate: Date.now(),
+      groupTicket: ticketId,
+    });
   }
   res.status(200).json({
     status: "success",
-    data: null,
+    data: doc,
   });
 });
 

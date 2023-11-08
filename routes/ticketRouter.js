@@ -23,6 +23,8 @@ router
 
 router.route("/all").post(ticketController.deleteMany);
 
+router.route("/num-ticketByDay").get(ticketController.getNumberTicketByDay);
+
 router.route("/import").post(ticketController.importTicket);
 
 router
