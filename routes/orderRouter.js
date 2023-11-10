@@ -23,6 +23,8 @@ router
 
 router.route("/all").post(orderController.deleteMany);
 
+router.route("/cancel/:id").post(orderController.cancelOrder);
+
 router
   .route("/:id")
   .get(

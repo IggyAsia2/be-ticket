@@ -3,8 +3,6 @@ version: "3.4"
 services:
   app:
     image: be-ticket-vintrip/express:v1
-    build:
-      dockerfile: Dockerfile
     container_name: ticket-vintrip-be
     ports:
       - "3000:80"

@@ -3,10 +3,20 @@ const mongoose = require("mongoose");
 const OrderSchema = new mongoose.Schema(
   {
     orderId: { type: Number, default: 1 },
+    state: {
+      type: String,
+      enum: ["Finished", "Canceled", "Pending"],
+      required: [true, "A Order must have a state"],
+      default: "Pending",
+    },
     groupTicket: {
       type: mongoose.Schema.ObjectId,
       ref: "groupTicket",
-      required: [true, "A Ticket must belong to a Group Ticket"],
+      required: [true, "A Order must belong to a Group Ticket"],
+    },
+    allOfTicket: {
+      type: Array,
+      require: [true, "An Order must have a ticket"]
     },
     customerName: {
       type: String,

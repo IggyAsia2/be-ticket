@@ -1,6 +1,7 @@
 const Ticket = require("../models/ticketModel");
 const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
+const factoryBom = require("./handleFactoryBom");
 const startOfDay = require("date-fns/startOfDay");
 const endOfDay = require("date-fns/endOfDay");
 
@@ -11,7 +12,8 @@ exports.setGroupTicketUserIds = (req, res, next) => {
   next();
 };
 
-exports.getAllTickets = factory.getAll(Ticket, null, "groupTicket");
+exports.getAllTickets = factoryBom.getAll(Ticket, null, "groupTicket");
+
 exports.getTicket = factory.getOne(Ticket, "ticket");
 exports.createTicket = factory.createOne(Ticket);
 exports.updateTicket = factory.updateOne(Ticket, "ticket");

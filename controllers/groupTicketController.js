@@ -24,7 +24,7 @@ exports.getAllGroupTickets = catchAsync(async (req, res, next) => {
   let filter = {};
   if (req.params.bigTicket) filter = { bigTicket: req.params.bigTicket };
   if (req.query.name) filter = { name: new RegExp(req.query.name, "i") };
-  const total = await GroupTicket.countDocuments();
+  // const total = await GroupTicket.countDocuments();
 
   let query = GroupTicket.find(filter);
 
@@ -106,14 +106,14 @@ exports.deleteGroupTicket = factory.deleteParentAndChildren(
 // exports.deleteMany = factory.deleteMany(GroupTicket);
 
 exports.exportTicket = catchAsync(async (req, res, next) => {
-  const { data, numberTickets, ticketId, exportUser } = req.body;
-  const { customerName, customerEmail, customerPhone, bookDate, quantity } =
-    data;
+  const { data, numberTickets, priceTicket, ticketId, exportUser } = req.body;
+  const { bookDate } = data;
   const newdate = bookDate.split("/").reverse().join("/");
+  const arrTicket = [];
   for (let i = 0; i < numberTickets; i++) {
     const endDate = startOfDay(new Date(newdate));
     const startDate = endOfDay(new Date(newdate));
-    await Ticket.findOneAndUpdate(
+    const ticket = await Ticket.findOneAndUpdate(
       {
         groupTicket: ticketId,
         state: "Pending",
@@ -123,29 +123,32 @@ exports.exportTicket = catchAsync(async (req, res, next) => {
       { state: "Delivered", issuedDate: Date.now() },
       { sort: { expiredDate: 1 } }
     );
+    arrTicket.push(ticket._id);
   }
+  // Delivered
 
   let lastPost = await Order.find({ _id: { $exists: true } })
     .sort({ _id: -1 })
     .limit(1);
   let doc;
+  const lastData = {
+    ...data,
+    allOfTicket: arrTicket,
+    subTotal: priceTicket * numberTickets,
+    bookDate: newdate,
+    exportUser,
+    paidDate: Date.now(),
+    groupTicket: ticketId,
+  };
   if (Array.isArray(lastPost) && lastPost.length > 0) {
     lastPost = lastPost[0];
     doc = await Order.create({
-      ...data,
-      bookDate: newdate,
-      exportUser,
-      paidDate: Date.now(),
-      groupTicket: ticketId,
+      ...lastData,
       orderId: lastPost["orderId"] + 1,
     });
   } else {
     doc = await Order.create({
-      ...data,
-      bookDate: newdate,
-      exportUser,
-      paidDate: Date.now(),
-      groupTicket: ticketId,
+      ...lastData,
     });
   }
   res.status(200).json({
