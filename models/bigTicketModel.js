@@ -17,6 +17,9 @@ const bigTicketSchema = new mongoose.Schema(
         "A Big ticket must have less or equals than 6 characters",
       ],
     },
+    manual: String,
+    note: String,
+    logo: String,
     slug: {
       type: String,
     },

@@ -1,7 +1,12 @@
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+const sharp = require("sharp");
 const BigTicket = require("../models/bigTicketModel");
 const GroupTicket = require("../models/groupTicketModel");
 const factory = require("./handlerFactory");
 const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 
 exports.getAllBigTickets = factory.getAll(BigTicket, { path: "groupTickets" });
 exports.getBigTicket = factory.getOne(BigTicket, "bigTicket", {
@@ -33,3 +38,27 @@ exports.deleteMany = catchAsync(async (req, res, next) => {
   });
 });
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/image/BigTicket");
+  },
+  filename: function (req, file, cb) {
+    console.log(file);
+    const filename = req.params.id + "." + file.originalname.split(".")[1];
+    cb(null, filename);
+    req.body.logo = filename;
+  },
+  fileFilter: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    if (ext !== ".png" && ext !== ".jpg" && ext !== "jpeg") {
+      return cb(new Error("Only images are allowed"));
+    }
+    cb(null, true);
+  },
+});
+
+const upload = multer({
+  storage: storage,
+});
+
+exports.uploadImg = upload.fields([{ name: "logo", maxCount: 1 }]);

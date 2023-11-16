@@ -4,6 +4,7 @@ const factory = require("./handlerFactory");
 const factoryBom = require("./handleFactoryBom");
 const startOfDay = require("date-fns/startOfDay");
 const endOfDay = require("date-fns/endOfDay");
+const AppError = require("../utils/appError");
 
 exports.setGroupTicketUserIds = (req, res, next) => {
   // Allow nested routes
@@ -23,11 +24,22 @@ exports.deleteMany = factory.deleteMany(Ticket);
 
 exports.importTicket = catchAsync(async (req, res, next) => {
   const data = req.body.data;
-  await Ticket.create(data);
-  res.status(200).json({
-    status: "success",
-    data: null,
-  });
+  await Ticket.syncIndexes();
+  try {
+    await Ticket.create(data);
+    res.status(200).json({
+      status: "success",
+      data: null,
+    });
+  } catch (error) {
+    return next(
+      new AppError(`Mã serial: ${error.keyValue.serial} đã tồn tại`, 401)
+    );
+  }
+  // res.status(200).json({
+  //   status: "success",
+  //   data: null,
+  // });
 });
 
 exports.getNumberTicketByDay = catchAsync(async (req, res, next) => {

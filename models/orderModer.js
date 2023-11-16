@@ -35,6 +35,7 @@ const OrderSchema = new mongoose.Schema(
       required: [true, "An Order must have a quantity"],
     },
     subTotal: Number,
+    price: Number,
     paidDate: {
       type: Date,
       required: [true, "An Order must have have a Paid Date"],
@@ -47,15 +48,12 @@ const OrderSchema = new mongoose.Schema(
       type: String,
       required: [true, "An Order must have an Import User"],
     },
-    createdAt: {
-      type: Date,
-      default: Date.now(),
-    },
   },
   {
     // toJSON: { virtuals: true },
     // toObject: { virtuals: true },
     versionKey: false,
+    timestamps: true
   }
 );
 

@@ -63,12 +63,13 @@ exports.updateOne = (Model, name) =>
       data: doc,
     });
   });
-
+ 
 exports.updateOneArray = (Model, name, ojay, popOptions) =>
   catchAsync(async (req, res, next) => {
     let query = Model.findByIdAndUpdate(
       req.params.id,
-      { $addToSet: { [ojay]: req.body[ojay] } },
+      req.body,
+      // { $addToSet: { [ojay]: req.body[ojay] } },
       {
         new: true,
         runValidators: true,
@@ -123,6 +124,7 @@ exports.getAll = (Model, popOptions, virtualId) =>
     // Execute Query
 
     let query = Model.find(filter);
+    const total = await Model.countDocuments();
 
     if (popOptions) query.populate(popOptions);
 
@@ -137,7 +139,7 @@ exports.getAll = (Model, popOptions, virtualId) =>
     const pagi = {
       current: req.query.current * 1 || 1,
       pageSize: req.query.pageSize * 1 || 10,
-      total: doc.length,
+      total: total,
     };
 
     res.status(200).json({

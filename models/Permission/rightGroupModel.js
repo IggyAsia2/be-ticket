@@ -7,17 +7,11 @@ const rightGroupSchema = new mongoose.Schema(
       unique: true,
       required: [true, "A Right must have a name"],
     },
-    // rights: [
-    //   {
-    //     type: mongoose.Schema.ObjectId,
-    //     ref: "Right",
-    //   },
-    // ],
   },
   {
-    // toJSON: { virtuals: true },
-    // toObject: { virtuals: true },
-    versionKey: false
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+    versionKey: false,
   }
 );
 // Aggregation Middleware

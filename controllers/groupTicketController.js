@@ -123,7 +123,7 @@ exports.exportTicket = catchAsync(async (req, res, next) => {
       { state: "Delivered", issuedDate: Date.now() },
       { sort: { expiredDate: 1 } }
     );
-    arrTicket.push(ticket._id);
+    arrTicket.push({ id: ticket._id, serial: ticket.serial });
   }
   // Delivered
 
@@ -135,6 +135,7 @@ exports.exportTicket = catchAsync(async (req, res, next) => {
     ...data,
     allOfTicket: arrTicket,
     subTotal: priceTicket * numberTickets,
+    price: priceTicket,
     bookDate: newdate,
     exportUser,
     paidDate: Date.now(),

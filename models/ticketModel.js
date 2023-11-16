@@ -3,6 +3,11 @@ const slugify = require("slugify");
 
 const TicketSchema = new mongoose.Schema(
   {
+    serial: {
+      type: String,
+      unique: true,
+      required: [true, "A Ticket must have a serial"],
+    },
     name: {
       type: String,
       required: [true, "A Ticket must have a name"],
@@ -12,16 +17,6 @@ const TicketSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: "groupTicket",
       required: [true, "A Ticket must belong to a Group Ticket"],
-    },
-    serial: {
-      type: String,
-      unique: true,
-      required: [true, "A Ticket must have a serial"],
-    },
-    code: {
-      type: String,
-      unique: true,
-      required: [true, "A Ticket must have a code"],
     },
     purchaseId: {
       type: String,

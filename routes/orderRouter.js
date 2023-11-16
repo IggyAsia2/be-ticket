@@ -7,7 +7,7 @@ const router = express.Router({ mergeParams: true });
 
 // Protect all routes after this middleware
 router.use(authController.protect);
-router.use(authController.restrictTo("admin"));
+// router.use(authController.restrictTo("admin"));
 // router.use();
 
 router
@@ -21,7 +21,11 @@ router
     orderController.createOrder
   );
 
-router.route("/all").post(orderController.deleteMany);
+router.route("/report").get(orderController.getAllReport)
+
+router.route("/all").post(orderController.updateManyOrder);
+
+router.route("/cancel-many").post(orderController.cancelManyOrder);
 
 router.route("/cancel/:id").post(orderController.cancelOrder);
 
@@ -35,9 +39,5 @@ router
     // permission("Update Ticket"),
     orderController.updateOrder
   )
-  .delete(
-    // permission("Delete Ticket"),
-    orderController.deleteOrder
-  );
 
 module.exports = router;

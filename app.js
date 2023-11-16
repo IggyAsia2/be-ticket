@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
@@ -30,7 +31,11 @@ const app = express();
 app.use(cors());
 
 // Set security HTTP headers
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginEmbedderPolicy: false,
+  })
+);
 
 // Development logging
 if (process.env.NODE_ENV === "development") {
@@ -46,7 +51,7 @@ const limiter = rateLimit({
 app.use("/api", limiter);
 
 // Body parser, reading data from body into req.body
-app.use(express.json({ limit: "10kb" }));
+app.use(express.json({ limit: "1000kb" }));
 
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
@@ -62,7 +67,9 @@ app.use(
 );
 
 // Serving static files
-app.use(express.static(`${__dirname}/public`));
+app.use(express.static("public"));
+
+// app.use(express.static(path.join(__dirname, 'public')));
 
 // Test middleware
 app.use((req, res, next) => {

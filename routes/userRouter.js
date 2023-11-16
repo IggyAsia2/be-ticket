@@ -23,25 +23,37 @@ router.get("/role/:id", userController.getRoleByUser);
 
 // Protect all routes after this middleware
 router.use(authController.protect);
-router.use(authController.restrictTo("admin"));
+// router.use(authController.restrictTo("admin"));
 
 router
   .route("/role")
-  .get(permission("Get User"), userController.getAllUserByRole);
+  .get(
+    // permission("Get User"), 
+  userController.getAllUserByRole);
 
 router
   .route("/")
-  .get(permission("Get User"), userController.getAllUsers)
-  .post(permission("Create User"), userController.createUser);
+  .get(
+    // permission("Get User"), 
+  userController.getAllUsers)
+  .post(
+    // permission("Create User"), 
+  userController.createUser);
 
 router
   .route("/all")
-  .post(permission("Delete User"), userController.deleteManyUser);
+  .post(
+    // permission("Delete User"), 
+  userController.deleteManyUser);
 
 router
   .route("/:id")
   .get(userController.getUser)
-  .patch(permission("Update User"), userController.updateUser)
-  .delete(permission("Delete User"), userController.deleteUser);
+  .patch(
+    // permission("Update User"), 
+    userController.updateUser)
+  .delete(
+    // permission("Delete User"), 
+  userController.deleteUser);
 
 module.exports = router;

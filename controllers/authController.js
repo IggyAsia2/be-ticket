@@ -35,7 +35,7 @@ const createSendToken = (user, statusCode, res) => {
 
   res.status(statusCode).json({
     token,
-    status: "success"
+    status: "success",
   });
 };
 
@@ -73,7 +73,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   if (!user || !correct) {
-    return next(new AppError("Incorrect email or password", 401));
+    return next(new AppError("Sai email hoặc mật khẩu!", 401));
   }
 
   // 3) If everything ok, send token to client
@@ -128,13 +128,20 @@ exports.restrictTo = (...roles) => {
 
     //rolse is an array
     // if (!roles.includes(doc.name)) {
-      // console.log(roles);
+    // console.log(roles);
     if (!roles.includes(req.user.role.name)) {
       return next(
         new AppError("You do not have permission to perform this action", 403)
       );
     }
     next();
+  };
+};
+
+exports.userEmail = () => {
+  return (req, res, next) => {
+    console.log(req.user);
+    return req.user.email;
   };
 };
 

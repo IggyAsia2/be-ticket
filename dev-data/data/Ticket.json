@@ -1,112 +1,12 @@
 [
   {
-    "name": "Furosemide",
-    "groupTicket": "65449f03e585f83204593cbf",
-    "serial": "988481215-2",
-    "code": "#d766c7",
-    "purchaseId": "#45e",
-    "activatedDate": "2023-11-18T10:17:17Z",
-    "expiredDate": "2024-01-06T19:52:19Z",
-    "state": "Pending",
-    "importUser": "pcvbaoit@gmail.com"
-  },
-  {
-    "name": "Avandia",
-    "groupTicket": "65449f03e585f83204593cc0",
-    "serial": "158586358-0",
-    "code": "#9c3ffa",
-    "purchaseId": "#ac5",
-    "activatedDate": "2023-11-15T16:35:49Z",
-    "expiredDate": "2024-01-22T11:27:58Z",
-    "state": "Pending",
-    "importUser": "pcvbaoit@gmail.com"
-  },
-  {
-    "name": "Pregnancy Balance",
-    "groupTicket": "65449f03e585f83204593cc0",
-    "serial": "618711805-7",
-    "code": "#35bdcc",
-    "purchaseId": "#9b1",
-    "activatedDate": "2023-11-18T12:31:29Z",
-    "expiredDate": "2024-01-18T17:23:42Z",
-    "state": "Pending",
-    "importUser": "pcvbaoit@gmail.com"
-  },
-  {
-    "name": "Womens Laxative",
-    "groupTicket": "65449f03e585f83204593cbf",
-    "serial": "468157785-5",
-    "code": "#8d2295",
-    "purchaseId": "#9ff",
-    "activatedDate": "2023-11-15T01:55:43Z",
-    "expiredDate": "2024-01-20T17:22:00Z",
-    "state": "Pending",
-    "importUser": "pcvbaoit@gmail.com"
-  },
-  {
-    "name": "Sun-Kissed Lip Balm",
-    "groupTicket": "65449f03e585f83204593cc0",
-    "serial": "572998841-9",
-    "code": "#286b71",
-    "purchaseId": "#ce9",
-    "activatedDate": "2023-11-17T14:47:54Z",
-    "expiredDate": "2024-01-18T09:03:03Z",
-    "state": "Pending",
-    "importUser": "pcvbaoit@gmail.com"
-  },
-  {
-    "name": "Octreotide",
-    "groupTicket": "65449f03e585f83204593cbe",
-    "serial": "288753622-2",
-    "code": "#cd604b",
-    "purchaseId": "#c7d",
-    "activatedDate": "2023-11-16T19:33:31Z",
-    "expiredDate": "2024-01-08T21:05:36Z",
-    "state": "Pending",
-    "importUser": "pcvbaoit@gmail.com"
-  },
-  {
-    "name": "ofloxacin",
-    "groupTicket": "65449f03e585f83204593cbf",
-    "serial": "052719274-0",
-    "code": "#54cfbb",
-    "purchaseId": "#ded",
-    "activatedDate": "2023-11-15T10:02:45Z",
-    "expiredDate": "2024-01-19T17:22:00Z",
-    "state": "Pending",
-    "importUser": "pcvbaoit@gmail.com"
-  },
-  {
-    "name": "NARS ALL DAY LUMINOUS FOUNDATION",
-    "groupTicket": "65449f03e585f83204593cbe",
-    "serial": "933834423-1",
-    "code": "#82a3dd",
-    "purchaseId": "#80a",
-    "activatedDate": "2023-11-21T07:08:01Z",
-    "expiredDate": "2024-01-24T06:28:36Z",
-    "state": "Pending",
-    "importUser": "pcvbaoit@gmail.com"
-  },
-  {
-    "name": "Good Sense Nicotine",
-    "groupTicket": "65449f03e585f83204593cbf",
-    "serial": "243321436-X",
-    "code": "#6c31c1",
-    "purchaseId": "#0d5",
-    "activatedDate": "2023-11-19T03:29:57Z",
-    "expiredDate": "2024-01-02T08:32:53Z",
-    "state": "Pending",
-    "importUser": "pcvbaoit@gmail.com"
-  },
-  {
-    "name": "HAWAIIAN Tropic",
-    "groupTicket": "65449f03e585f83204593cbe",
-    "serial": "351004693-5",
-    "code": "#9d303d",
-    "purchaseId": "#f3e",
-    "activatedDate": "2023-11-18T22:18:27Z",
-    "expiredDate": "2024-01-06T22:35:49Z",
-    "state": "Pending",
+    "name": "Topical Anesthetic",
+    "groupTicket": "6555bda20862c423c0347d32",
+    "serial": "67239-0206",
+    "code": "#1e6a3f",
+    "purchaseId": "#15e",
+    "activatedDate": "2023-11-19T13:35:27Z",
+    "expiredDate": "2024-01-05T16:42:06Z",
     "importUser": "pcvbaoit@gmail.com"
   }
 ]

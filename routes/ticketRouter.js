@@ -7,7 +7,7 @@ const router = express.Router({ mergeParams: true });
 
 // Protect all routes after this middleware
 router.use(authController.protect);
-router.use(authController.restrictTo("admin"));
+// router.use(authController.restrictTo("admin"));
 // router.use();
 
 router

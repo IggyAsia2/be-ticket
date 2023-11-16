@@ -11,7 +11,7 @@ exports.createRole = factory.createOne(Role);
 exports.updateRole = factory.updateOneArray(Role, "role", "rights", {
   path: "rights",
   select: "-__v",
-});
+}); 
 exports.deleteRole = factory.deleteOne(Role, "role");
 
 exports.getRoleList = catchAsync(async (req, res, next) => {

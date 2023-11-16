@@ -11,7 +11,6 @@ const roleSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.ObjectId,
         ref: "right",
-        // select: "name"
         select: false
       },
     ],
