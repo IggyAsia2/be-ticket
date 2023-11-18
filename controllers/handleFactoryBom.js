@@ -8,7 +8,7 @@ exports.getAll = (Model, popOptions, virtualId) =>
   catchAsync(async (req, res, next) => {
     // To allow for nested GET arrivals on diary
     let filter = {};
-    if (req.baseUrl === "/api/v1/orders") {
+    if (req.baseUrl === "/api/v1/orders" && req.user.role.name === "sale") {
       Object.assign(filter, {
         exportUser: req.user.email,
       });
