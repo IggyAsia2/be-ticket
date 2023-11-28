@@ -47,9 +47,11 @@ exports.deleteMany = (Model) =>
     });
   });
 
-exports.updateOne = (Model, name) =>
+exports.updateOne = (Model, name, limitFields) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
+    const data = req.body;
+    if (limitFields) limitFields.forEach((el) => delete data[el]);
+    const doc = await Model.findByIdAndUpdate(req.params.id, data, {
       new: true,
       runValidators: true,
     });
@@ -63,7 +65,7 @@ exports.updateOne = (Model, name) =>
       data: doc,
     });
   });
- 
+
 exports.updateOneArray = (Model, name, ojay, popOptions) =>
   catchAsync(async (req, res, next) => {
     let query = Model.findByIdAndUpdate(

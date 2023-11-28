@@ -59,11 +59,6 @@ bigTicketSchema.pre(/^find/, function (next) {
   next();
 });
 
-bigTicketSchema.post(/^find/, function (docs, next) {
-  console.log(`Query took ${Date.now() - this.start} millisecond`);
-  next();
-});
-
 // Aggregation Middleware
 
 const BigTicket = mongoose.model("bigTicket", bigTicketSchema);

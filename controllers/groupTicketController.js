@@ -106,7 +106,14 @@ exports.deleteGroupTicket = factory.deleteParentAndChildren(
 // exports.deleteMany = factory.deleteMany(GroupTicket);
 
 exports.exportTicket = catchAsync(async (req, res, next) => {
-  const { data, numberTickets, priceTicket, ticketId, exportUser } = req.body;
+  const {
+    data,
+    numberTickets,
+    priceTicket,
+    discountPrice,
+    ticketId,
+    exportUser,
+  } = req.body;
   const { bookDate } = data;
   const newdate = bookDate.split("/").reverse().join("/");
   const arrTicket = [];
@@ -136,6 +143,8 @@ exports.exportTicket = catchAsync(async (req, res, next) => {
     allOfTicket: arrTicket,
     subTotal: priceTicket * numberTickets,
     price: priceTicket,
+    discountPrice,
+    discountSubtotal: discountPrice * numberTickets,
     bookDate: newdate,
     exportUser,
     paidDate: Date.now(),
@@ -154,7 +163,7 @@ exports.exportTicket = catchAsync(async (req, res, next) => {
   }
   res.status(200).json({
     status: "success",
-    data: doc,
+    data: null,
   });
 });
 
@@ -189,5 +198,73 @@ exports.getAllForImport = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: doc,
+  });
+});
+
+exports.exportGroupTicket = catchAsync(async (req, res, next) => {
+  const {
+    groupNumberTicket,
+    priceTicket,
+    discountTicket,
+    data,
+    exportUser,
+    departID,
+    bookDate,
+  } = req.body;
+  // console.log(priceTicket);
+  const newdate = bookDate.split("/").reverse().join("/");
+  for (let a = 0; a < groupNumberTicket.length; a++) {
+    const arrTicket = [];
+    for (let i = 0; i < groupNumberTicket[a][1]; i++) {
+      const endDate = startOfDay(new Date(newdate));
+      const startDate = endOfDay(new Date(newdate));
+      const ticket = await Ticket.findOneAndUpdate(
+        {
+          groupTicket: groupNumberTicket[a][0],
+          state: "Pending",
+          activatedDate: { $lte: startDate },
+          expiredDate: { $gte: endDate },
+        },
+        { state: "Delivered", issuedDate: Date.now() },
+        { sort: { expiredDate: 1 } }
+      );
+      arrTicket.push({ id: ticket._id, serial: ticket.serial });
+    }
+    let lastPost = await Order.find({ _id: { $exists: true } })
+      .sort({ _id: -1 })
+      .limit(1);
+    let doc;
+    const whatPrice = priceTicket[groupNumberTicket[a][0]];
+    const whatDiscountPrice = discountTicket[groupNumberTicket[a][0]];
+    const lastData = {
+      ...data,
+      quantity: groupNumberTicket[a][1],
+      allOfTicket: arrTicket,
+      subTotal: whatPrice * groupNumberTicket[a][1],
+      price: whatPrice,
+      discountPrice: whatDiscountPrice,
+      discountSubtotal: whatDiscountPrice * groupNumberTicket[a][1],
+      bookDate: newdate,
+      exportUser,
+      departID,
+      paidDate: Date.now(),
+      groupTicket: groupNumberTicket[a][0],
+    };
+    if (Array.isArray(lastPost) && lastPost.length > 0) {
+      lastPost = lastPost[0];
+      doc = await Order.create({
+        ...lastData,
+        orderId: lastPost["orderId"] + 1,
+      });
+    } else {
+      doc = await Order.create({
+        ...lastData,
+      });
+    }
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: null,
   });
 });

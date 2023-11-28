@@ -24,6 +24,7 @@ router
 router.route("/all").post(ticketController.deleteMany);
 
 router.route("/num-ticketByDay").get(ticketController.getNumberTicketByDay);
+router.route("/num-groupTicket").get(ticketController.getGroupNumberTicket);
 
 router.route("/import").post(ticketController.importTicket);
 

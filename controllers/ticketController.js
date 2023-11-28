@@ -1,4 +1,5 @@
 const Ticket = require("../models/ticketModel");
+const BigTicket = require("../models/bigTicketModel");
 const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
 const factoryBom = require("./handleFactoryBom");
@@ -55,5 +56,30 @@ exports.getNumberTicketByDay = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     available: ticketCount,
+  });
+});
+
+exports.getGroupNumberTicket = catchAsync(async (req, res, next) => {
+  const doc = await BigTicket.findById(
+    req.query.bigTicket,
+    "groupTickets"
+  ).populate("groupTickets");
+  const endDate = startOfDay(new Date(req.query.expiredDate));
+  const startDate = endOfDay(new Date(req.query.expiredDate));
+  const queryData = doc.groupTickets;
+  const newArr = [];
+  for (let i = 0; i < queryData.length; i++) {
+    const ticketCount = await Ticket.countDocuments({
+      groupTicket: queryData[i]._id,
+      state: "Pending",
+      activatedDate: { $lte: startDate },
+      expiredDate: { $gte: endDate },
+    });
+    newArr.push(ticketCount);
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: newArr,
   });
 });

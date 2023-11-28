@@ -8,6 +8,7 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const cors = require("cors");
 
+const cronJob = require("./utils/cronJob.js");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const userRouter = require("./routes/userRouter.js");
@@ -15,6 +16,7 @@ const bigTicketRouter = require("./routes/bigTicketRouter");
 const groupTicketRouter = require("./routes/groupTicketRouter");
 const ticketRouter = require("./routes/ticketRouter");
 const orderRouter = require("./routes/orderRouter.js");
+const departRouter = require("./routes/departRouter.js");
 const roleRouter = require("./routes/Permission/roleRouter");
 const rightRouter = require("./routes/Permission/rightRouter");
 const rightGroupRouter = require("./routes/Permission/rightGroupRouter");
@@ -88,11 +90,13 @@ app.use("/api/v1/groupTickets", groupTicketRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/tickets", ticketRouter);
 app.use("/api/v1/orders", orderRouter);
-// app.use("/api/v1/trucks", truckRouter);
+app.use("/api/v1/departs", departRouter);
 
 app.use("/api/v1/roles", roleRouter);
 app.use("/api/v1/rights", rightRouter);
 app.use("/api/v1/right-group", rightGroupRouter);
+
+cronJob.autoUpdateOrder(10);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));

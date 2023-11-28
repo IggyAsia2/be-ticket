@@ -29,6 +29,7 @@ router
   .post(groupTicketController.deleteMany);
 
 router.route("/export").post(groupTicketController.exportTicket);
+router.route("/export-group").post(groupTicketController.exportGroupTicket);
 
 router.route("/stock/:id").get(groupTicketController.updateStock);
 

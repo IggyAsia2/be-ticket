@@ -1,22 +1,22 @@
 const mongoose = require("mongoose");
-const slugify = require("slugify");
 
 const TicketSchema = new mongoose.Schema(
   {
     serial: {
       type: String,
-      unique: true,
+      // unique: true,
+      index: true,
       required: [true, "A Ticket must have a serial"],
     },
     name: {
       type: String,
       required: [true, "A Ticket must have a name"],
     },
-    slug: String,
     groupTicket: {
       type: mongoose.Schema.ObjectId,
       ref: "groupTicket",
       required: [true, "A Ticket must belong to a Group Ticket"],
+      index: true,
     },
     purchaseId: {
       type: String,
@@ -57,15 +57,12 @@ const TicketSchema = new mongoose.Schema(
   }
 );
 
+TicketSchema.index({ serial: 1, groupTicket: 1 }, { unique: true });
+
 // Query Middleware
 TicketSchema.pre(/^find/, function (next) {
   // All string start with find
   this.populate("groupTicket", ["name", "sku", "unit"]);
-  next();
-});
-
-TicketSchema.pre("save", function (next) {
-  this.slug = slugify(this.name, { lower: true });
   next();
 });
 

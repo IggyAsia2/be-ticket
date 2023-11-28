@@ -21,9 +21,13 @@ router
     orderController.createOrder
   );
 
-router.route("/report").get(orderController.getAllReport)
+router.route("/reduce").post(orderController.reduceOrder);
+
+router.route("/report").get(orderController.getAllReport);
 
 router.route("/all").post(orderController.updateManyOrder);
+
+router.route("/send-mail").post(orderController.sendEmailOrder);
 
 router.route("/cancel-many").post(orderController.cancelManyOrder);
 
@@ -38,6 +42,6 @@ router
   .patch(
     // permission("Update Ticket"),
     orderController.updateOrder
-  )
+  );
 
 module.exports = router;

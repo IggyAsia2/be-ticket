@@ -27,6 +27,8 @@ router
 
 router.route("/all").post(bigTicketController.deleteMany);
 
+router.route("/link").post(bigTicketController.getProductToLink);
+
 router
   .route("/:id")
   .get(

@@ -33,6 +33,7 @@ const groupTicketSchema = new mongoose.Schema(
       type: Number,
       required: [true, "A Group Ticket must have a price"],
     },
+    discountPrice: Number,
   },
   {
     // toJSON: { virtuals: true },
