@@ -8,8 +8,10 @@ lerna-debug.log*
 .pnpm-debug.log*
 
 .env
+docker-compose.yml
 # Dependency directories
 node_modules/
+public/image/BigTicket
 # dotenv environment variable files
 
 # yarn v2
