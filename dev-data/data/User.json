@@ -1,23 +1,9 @@
 [
   {
     "name": "Admin",
-    "email": "pcvbaoit@gmail.com",
-    "role": "652d0d5349f50641fcfc95eb",
-    "password": 123456,
-    "passwordConfirm": 123456
-  },
-  {
-    "name": "Xuan Bao",
-    "email": "motconchimse1@gmail.com",
-    "role": "652d0d5349f50641fcfc95eb",
-    "password": 123456,
-    "passwordConfirm": 123456
-  },
-  {
-    "name": "Mai Linh",
-    "email": "mailinh@gmail.com",
-    "role": "652d0d5349f50641fcfc95ec",
-    "password": 123456,
-    "passwordConfirm": 123456
+    "email": "pini@gmail.com",
+    "role": "6566ec0f5181ff0b24d2854a",
+    "password": "pini123",
+    "passwordConfirm": "pini123"
   }
 ]

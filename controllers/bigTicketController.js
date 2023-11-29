@@ -67,7 +67,7 @@ exports.getProductToLink = catchAsync(async (req, res, next) => {
   const newArr = [];
   const reqData = req.body.listBig;
   for (let i = 0; i < reqData.length; i++) {
-    const doc = await BigTicket.findById(reqData[i], "note name manual logo");
+    const doc = await BigTicket.findById(reqData[i], "note name manual logo heightNote");
     newArr.push(doc);
   }
   res.status(200).json({

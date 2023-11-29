@@ -12,14 +12,15 @@ const bigTicketSchema = new mongoose.Schema(
         40,
         "A Big ticket must have less or equals than 40 characters",
       ],
-      minlength: [
-        6,
-        "A Big ticket must have less or equals than 6 characters",
-      ],
+      minlength: [6, "A Big ticket must have less or equals than 6 characters"],
     },
     manual: String,
     note: String,
     logo: String,
+    heightNote: {
+      type: Array,
+      default: ["", "", ""],
+    },
     slug: {
       type: String,
     },
@@ -31,7 +32,7 @@ const bigTicketSchema = new mongoose.Schema(
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-    versionKey: false
+    versionKey: false,
   }
 );
 
@@ -52,7 +53,6 @@ bigTicketSchema.pre("save", function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
-
 
 bigTicketSchema.pre(/^find/, function (next) {
   this.populate("groupTicket", "name");
