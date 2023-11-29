@@ -27,7 +27,7 @@ const swaggerOptions = require("./utils/swagger");
 
 const app = express();
 
-// 1) Global Middleware
+// 1) Global Middlewares
 
 // Implement CORS
 app.use(cors());
