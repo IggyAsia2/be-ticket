@@ -7,7 +7,8 @@
     "dev": "nodemon server.js",
     "start": "SET NODE_ENV=production&&nodemon server.js",
     "push": "git add . && git commit -m 'a' && git push",
-    "deploy": "docker-compose down && docker build -t be-ticket-vintrip/express:v1 . && docker-compose up -d"
+    "deploy": "docker-compose down && docker build -t be-ticket-vintrip/express:v1 . && docker-compose up -d",
+    "deploy-pini": "docker-compose down && docker build -t be-ticket-vintrip/express:v1 . && docker-compose up -d"
   },
   "author": "",
   "license": "ISC",
