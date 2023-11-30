@@ -71,7 +71,9 @@ exports.getGroupTicket = factory.getOne(GroupTicket, "groupTickets", {
   path: "tickets",
 });
 exports.createGroupTicket = factory.createOne(GroupTicket);
+
 exports.updateGroupTicket = factory.updateOne(GroupTicket, "groupTicket");
+
 exports.updateStock = catchAsync(async (req, res, next) => {
   const numberStock = await Ticket.where({
     groupTicket: req.params.id,
