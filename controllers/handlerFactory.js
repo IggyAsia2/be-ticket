@@ -49,7 +49,6 @@ exports.deleteMany = (Model) =>
 
 exports.updateOne = (Model, name, limitFields) =>
   catchAsync(async (req, res, next) => {
-    const data = req.body;
     if (limitFields) limitFields.forEach((el) => delete data[el]);
     const doc = await Model.findByIdAndUpdate(req.params.id, data, {
       new: true,

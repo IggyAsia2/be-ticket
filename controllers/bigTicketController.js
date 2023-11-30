@@ -9,11 +9,37 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 
 exports.getAllBigTickets = factory.getAll(BigTicket, { path: "groupTickets" });
+
 exports.getBigTicket = factory.getOne(BigTicket, "bigTicket", {
   path: "groupTickets",
 });
+
 exports.createBigTicket = factory.createOne(BigTicket);
-exports.updateBigTicket = factory.updateOne(BigTicket, "bigTicket");
+
+exports.updateBigTicket = catchAsync(async (req, res, next) => {
+  const data = req.body;
+
+  if (data.heightNote) {
+    const newHN = req.body.heightNote.split(",");
+    data.heightNote = newHN;
+  }
+  console.log(data);
+
+  const doc = await BigTicket.findByIdAndUpdate(req.params.id, data, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!doc) {
+    return next(new AppError(`No Big Ticket found with that ID`, 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    // data: doc,
+  });
+});
+
 exports.deleteBigTicket = factory.deleteParentAndChildren(
   BigTicket,
   GroupTicket,
@@ -67,7 +93,10 @@ exports.getProductToLink = catchAsync(async (req, res, next) => {
   const newArr = [];
   const reqData = req.body.listBig;
   for (let i = 0; i < reqData.length; i++) {
-    const doc = await BigTicket.findById(reqData[i], "note name manual logo heightNote");
+    const doc = await BigTicket.findById(
+      reqData[i],
+      "note name manual logo heightNote"
+    );
     newArr.push(doc);
   }
   res.status(200).json({
