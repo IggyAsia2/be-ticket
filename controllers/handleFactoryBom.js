@@ -13,6 +13,7 @@ exports.getAll = (Model, popOptions, virtualId) =>
         exportUser: req.user.email,
       });
     }
+    const total = await Model.countDocuments(filter);
     let dataBig;
     const queryLength = Object.getOwnPropertyNames(req.query).length;
     if (
@@ -33,7 +34,6 @@ exports.getAll = (Model, popOptions, virtualId) =>
     // Execute Query
 
     let query = Model.find(filter);
-    const total = await Model.countDocuments();
 
     if (popOptions) query.populate(popOptions);
 

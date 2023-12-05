@@ -31,6 +31,7 @@ const departSchema = new mongoose.Schema(
       ],
       minlength: [6, "A Department must have less or equals than 6 characters"],
     },
+    phone: String,
     cashiers: {
       type: [cashierSchema],
     },

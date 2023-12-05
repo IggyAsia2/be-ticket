@@ -176,3 +176,12 @@ exports.sendEmailOrder = catchAsync(async (req, res, next) => {
     );
   }
 });
+
+exports.statisticDriver = catchAsync(async (req, res, next) => {
+  const customerPhone = req.query.phone;
+  const count = await Order.countDocuments({ customerPhone });
+  res.status(200).json({
+    status: "success",
+    data: count,
+  });
+});

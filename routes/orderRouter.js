@@ -33,6 +33,8 @@ router.route("/cancel-many").post(orderController.cancelManyOrder);
 
 router.route("/cancel/:id").post(orderController.cancelOrder);
 
+router.route("/driver").get(orderController.statisticDriver);
+
 router
   .route("/:id")
   .get(

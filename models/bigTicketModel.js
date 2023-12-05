@@ -17,6 +17,7 @@ const bigTicketSchema = new mongoose.Schema(
     manual: String,
     note: String,
     logo: String,
+    country: String,
     heightNote: {
       type: Array,
       default: ["", "", ""],

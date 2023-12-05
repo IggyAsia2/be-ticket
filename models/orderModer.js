@@ -24,7 +24,7 @@ const OrderSchema = new mongoose.Schema(
     },
     customerEmail: {
       type: String,
-      required: [true, "An Order must have an email "],
+      // required: [true, "An Order must have an email "],
     },
     customerPhone: {
       type: String,

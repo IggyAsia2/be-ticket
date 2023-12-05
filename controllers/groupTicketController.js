@@ -5,6 +5,7 @@ const factory = require("./handlerFactory");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const APIFeatures = require("../utils/apiFeatures");
+const APIFeaturesAdvanced = require("../utils/apiFeaturesAdvanced");
 const startOfDay = require("date-fns/startOfDay");
 const endOfDay = require("date-fns/endOfDay");
 
@@ -20,15 +21,37 @@ exports.setBigTicketUserIds = (req, res, next) => {
 //   null,
 //   "bigTicket"
 // );
+// exports.getAllGroupTickets = catchAsync(async (req, res, next) => {
+//   const doc = await GroupTicket.find({
+//     bigTicket: {
+//       $in: ["6565551bc93e031af0369c0a"
+//       , "65655756c93e031af0369d80"
+//     ],
+//     },
+//   });
+//   res.status(200).json({
+//     status: "success",
+//     total: doc.length,
+//     data: doc,
+//   });
+// });
+
 exports.getAllGroupTickets = catchAsync(async (req, res, next) => {
   let filter = {};
   if (req.params.bigTicket) filter = { bigTicket: req.params.bigTicket };
   if (req.query.name) filter = { name: new RegExp(req.query.name, "i") };
   // const total = await GroupTicket.countDocuments();
+  let dataBig;
+  const queryLength = Object.getOwnPropertyNames(req.query).length;
+  if (Object.getOwnPropertyNames(req.query)[queryLength - 1] === "bigTicket") {
+    dataBig = req.query.bigTicket.split(",");
+    Object.assign(filter, { bigTicket: { $in: dataBig } });
+  }
 
   let query = GroupTicket.find(filter);
+  const total = await GroupTicket.countDocuments();
 
-  const features = new APIFeatures(query, req.query)
+  const features = new APIFeaturesAdvanced(query, req.query)
     .filter()
     .sort()
     .limitFields()
@@ -61,15 +84,17 @@ exports.getAllGroupTickets = catchAsync(async (req, res, next) => {
         status: "success",
         current: req.query.current * 1 || 1,
         pageSize: req.query.pageSize * 1 || 10,
-        total: newDoc.length,
+        total,
         data: newDoc,
       })
     )
     .catch((err) => console.error(err));
 });
+
 exports.getGroupTicket = factory.getOne(GroupTicket, "groupTickets", {
   path: "tickets",
 });
+
 exports.createGroupTicket = factory.createOne(GroupTicket);
 
 exports.updateGroupTicket = factory.updateOne(GroupTicket, "groupTicket");
