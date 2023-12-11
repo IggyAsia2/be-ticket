@@ -10,6 +10,7 @@ const sendEmail = require("../utils/email");
 exports.getAllOrders = factoryBom.getAll(Order, null, "groupTicket");
 exports.getAllReport = factoryBom.getAllReport(Order, null, "groupTicket");
 exports.getOrder = factory.getOne(Order, "order");
+exports.getLinkOrder = factory.getOne(Order, "order");
 exports.createOrder = catchAsync(async (req, res, next) => {
   let lastPost = await Order.find({ _id: { $exists: true } })
     .sort({ _id: -1 })

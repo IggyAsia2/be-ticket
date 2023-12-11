@@ -295,3 +295,16 @@ exports.exportGroupTicket = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
+
+exports.getMockData = catchAsync(async (req, res, next) => {
+  const data = await GroupTicket.find({ unit: req.query.unit });
+  const newArr = [];
+  for (let i = 0; i < data.length; i++) {
+    newArr.push(data[i].sku);
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: newArr.toString(),
+  });
+});

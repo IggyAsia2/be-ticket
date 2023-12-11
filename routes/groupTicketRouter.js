@@ -33,6 +33,8 @@ router.route("/export-group").post(groupTicketController.exportGroupTicket);
 
 router.route("/stock/:id").get(groupTicketController.updateStock);
 
+router.route("/mock").get(groupTicketController.getMockData);
+
 router
   .route("/:id")
   .get(

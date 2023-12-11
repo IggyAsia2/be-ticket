@@ -22,9 +22,9 @@ const OrderSchema = new mongoose.Schema(
       type: String,
       required: [true, "An Order must have a name"],
     },
-    customerEmail: {
+    customerCar: {
       type: String,
-      // required: [true, "An Order must have an email "],
+      required: [true, "An Order must have a car "],
     },
     customerPhone: {
       type: String,

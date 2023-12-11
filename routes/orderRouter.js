@@ -5,6 +5,8 @@ const { permission } = authController;
 
 const router = express.Router({ mergeParams: true });
 
+router.route("/link-order/:id").get(orderController.getLinkOrder);
+
 // Protect all routes after this middleware
 router.use(authController.protect);
 // router.use(authController.restrictTo("admin"));
@@ -35,15 +37,9 @@ router.route("/cancel/:id").post(orderController.cancelOrder);
 
 router.route("/driver").get(orderController.statisticDriver);
 
-router
-  .route("/:id")
-  .get(
-    // permission("Get Ticket"),
-    orderController.getOrder
-  )
-  .patch(
-    // permission("Update Ticket"),
-    orderController.updateOrder
-  );
+router.route("/:id").get(orderController.getOrder).patch(
+  // permission("Update Ticket"),
+  orderController.updateOrder
+);
 
 module.exports = router;

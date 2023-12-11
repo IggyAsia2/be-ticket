@@ -7,7 +7,7 @@
     "dev": "nodemon server.js",
     "start": "SET NODE_ENV=production&&nodemon server.js",
     "push": "git add . && git commit -m 'a' && git push",
-    "deploy": "docker-compose down && docker build -t be-ticket-vintrip/express:v1 . && docker-compose up -d",
+    "deploy": "docker-compose down && docker build -t be-ticket-vintrip/express:v1 . && docker image prune -f && docker-compose up -d",
     "deploy-pini": "docker-compose down && docker build -t be-ticket-vintrip/express:v1 . && docker-compose up -d"
   },
   "author": "",
@@ -31,6 +31,7 @@
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.7.2",
     "nodemon": "^3.0.1",
+    "pm2": "^5.3.0",
     "sharp": "^0.32.6",
     "slugify": "^1.6.5",
     "swagger-jsdoc": "^6.2.8",

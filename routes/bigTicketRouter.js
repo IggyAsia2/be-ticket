@@ -8,6 +8,8 @@ const { permission } = authController;
 
 const router = express.Router();
 
+router.route("/link").post(bigTicketController.getProductToLink);
+
 // Protect all routes after this middleware
 router.use(authController.protect);
 // router.use(authController.restrictTo("admin"));
@@ -26,8 +28,6 @@ router
   );
 
 router.route("/all").post(bigTicketController.deleteMany);
-
-router.route("/link").post(bigTicketController.getProductToLink);
 
 router
   .route("/:id")
