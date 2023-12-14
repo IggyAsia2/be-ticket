@@ -126,7 +126,6 @@ exports.getAll = (Model, popOptions, virtualId) =>
     // Execute Query
 
     let query = Model.find(filter);
-    const total = await Model.countDocuments();
 
     if (popOptions) query.populate(popOptions);
 
@@ -135,6 +134,9 @@ exports.getAll = (Model, popOptions, virtualId) =>
       .sort()
       .limitFields()
       .pagination();
+    
+    const total = await Model.countDocuments(filter);
+    
 
     const doc = await features.query;
 

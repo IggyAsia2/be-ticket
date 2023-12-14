@@ -49,13 +49,16 @@ exports.getAllGroupTickets = catchAsync(async (req, res, next) => {
   }
 
   let query = GroupTicket.find(filter);
-  const total = await GroupTicket.countDocuments();
+
+  const total = await GroupTicket.countDocuments(filter);
 
   const features = new APIFeaturesAdvanced(query, req.query)
     .filter()
     .sort()
     .limitFields()
     .pagination();
+
+  console.log(features);
 
   const doc = await features.query;
 

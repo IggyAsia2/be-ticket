@@ -4,16 +4,20 @@ const User = require("../models/userModel");
 const APIFeaturesAdvanced = require("../utils/apiFeaturesAdvanced");
 const { groupByFuc, getUserId } = require("../helper/arrayHelper");
 
+const selfOrderArr = ["sale", "agent"];
+
 exports.getAll = (Model, popOptions, virtualId) =>
   catchAsync(async (req, res, next) => {
     // To allow for nested GET arrivals on diary
     let filter = {};
-    if (req.baseUrl === "/api/v1/orders" && req.user.role.name === "sale") {
+    if (
+      req.baseUrl === "/api/v1/orders" &&
+      selfOrderArr.includes(req.user.role.name)
+    ) {
       Object.assign(filter, {
         exportUser: req.user.email,
       });
     }
-    const total = await Model.countDocuments(filter);
     let dataBig;
     const queryLength = Object.getOwnPropertyNames(req.query).length;
     if (
@@ -44,6 +48,8 @@ exports.getAll = (Model, popOptions, virtualId) =>
       .pagination();
 
     const doc = await features.query;
+    const total = await Model.countDocuments(filter);
+
 
     const pagi = {
       current: req.query.current * 1 || 1,

@@ -22,6 +22,16 @@ const userSchema = new mongoose.Schema(
       required: [true, "Please provide your role"],
       ref: "Role",
     },
+    isAgent: {
+      type: Boolean,
+      required: [true, "Please provide your Agent"],
+      default: false,
+    },
+    moneny: {
+      type: Number,
+      min: [0, "Must be at least 0"],
+      default: 0,
+    },
     password: {
       type: String,
       required: [true, "Please provide a password"],
