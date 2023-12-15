@@ -8,6 +8,7 @@ const APIFeatures = require("../utils/apiFeatures");
 const APIFeaturesAdvanced = require("../utils/apiFeaturesAdvanced");
 const startOfDay = require("date-fns/startOfDay");
 const endOfDay = require("date-fns/endOfDay");
+const { FilterCount } = require("../helper/help");
 
 exports.setBigTicketUserIds = (req, res, next) => {
   // Allow nested routes
@@ -50,17 +51,19 @@ exports.getAllGroupTickets = catchAsync(async (req, res, next) => {
 
   let query = GroupTicket.find(filter);
 
-  const total = await GroupTicket.countDocuments(filter);
-
   const features = new APIFeaturesAdvanced(query, req.query)
     .filter()
     .sort()
     .limitFields()
     .pagination();
 
-  console.log(features);
-
   const doc = await features.query;
+
+  console.log(FilterCount(filter, req.query, ["bigTicket", "sort"]));
+
+  const total = await GroupTicket.countDocuments(
+    FilterCount(filter, req.query, ["bigTicket", "sort"])
+  );
 
   async function stockFunc() {
     return doc.map(async (el) => {

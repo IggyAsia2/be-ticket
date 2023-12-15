@@ -3,6 +3,7 @@ const GroupTicket = require("../models/groupTicketModel");
 const User = require("../models/userModel");
 const APIFeaturesAdvanced = require("../utils/apiFeaturesAdvanced");
 const { groupByFuc, getUserId } = require("../helper/arrayHelper");
+const { FilterCount } = require("../helper/help");
 
 const selfOrderArr = ["sale", "agent"];
 
@@ -48,8 +49,8 @@ exports.getAll = (Model, popOptions, virtualId) =>
       .pagination();
 
     const doc = await features.query;
-    const total = await Model.countDocuments(filter);
 
+    const total = await Model.countDocuments(FilterCount(filter, req.query));
 
     const pagi = {
       current: req.query.current * 1 || 1,

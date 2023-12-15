@@ -1,6 +1,7 @@
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const APIFeatures = require("../utils/apiFeatures");
+const { FilterCount } = require("../helper/help");
 
 exports.deleteParentAndChildren = (ModelParent, ModalChild, name) =>
   catchAsync(async (req, res, next) => {
@@ -134,9 +135,8 @@ exports.getAll = (Model, popOptions, virtualId) =>
       .sort()
       .limitFields()
       .pagination();
-    
-    const total = await Model.countDocuments(filter);
-    
+
+    const total = await Model.countDocuments(FilterCount(filter, req.query));
 
     const doc = await features.query;
 

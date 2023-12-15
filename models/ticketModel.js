@@ -44,16 +44,12 @@ const TicketSchema = new mongoose.Schema(
       type: String,
       required: [true, "A Ticket must have an Import User"],
     },
-    createdAt: {
-      type: Date,
-      default: Date.now(),
-      // if you want to hide
-    },
   },
   {
     // toJSON: { virtuals: true },
     // toObject: { virtuals: true },
     versionKey: false,
+    timestamps: true,
   }
 );
 
