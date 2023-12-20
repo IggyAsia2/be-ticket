@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const { type } = require("os");
 
 const userSchema = new mongoose.Schema(
   {
@@ -34,7 +35,9 @@ const userSchema = new mongoose.Schema(
     moneny: {
       type: Number,
       min: [0, "Must be at least 0"],
-      default: 0,
+    },
+    discountAgent: {
+      type: Number,
     },
     password: {
       type: String,

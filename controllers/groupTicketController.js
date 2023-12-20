@@ -131,6 +131,7 @@ exports.updateStock = catchAsync(async (req, res, next) => {
     data: doc,
   });
 });
+
 exports.deleteGroupTicket = factory.deleteParentAndChildren(
   GroupTicket,
   Ticket,
@@ -312,5 +313,72 @@ exports.getMockData = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: newArr.toString(),
+  });
+});
+
+exports.exportAgentGroupTicket = catchAsync(async (req, res, next) => {
+  const {
+    groupNumberTicket,
+    priceTicket,
+    discountTicket,
+    data,
+    exportUser,
+    departID,
+    bookDate,
+  } = req.body;
+  const discountAgent = req.user.discountAgent;
+  const newdate = bookDate.split("/").reverse().join("/");
+  for (let a = 0; a < groupNumberTicket.length; a++) {
+    const arrTicket = [];
+    for (let i = 0; i < groupNumberTicket[a][1]; i++) {
+      const endDate = startOfDay(new Date(newdate));
+      const startDate = endOfDay(new Date(newdate));
+      const ticket = await Ticket.findOneAndUpdate(
+        {
+          groupTicket: groupNumberTicket[a][0],
+          state: "Pending",
+          activatedDate: { $lte: startDate },
+          expiredDate: { $gte: endDate },
+        },
+        { state: "Delivered", issuedDate: Date.now() },
+        { sort: { expiredDate: 1 } }
+      );
+      arrTicket.push({ id: ticket._id, serial: ticket.serial });
+    }
+    let lastPost = await Order.find({ _id: { $exists: true } })
+      .sort({ _id: -1 })
+      .limit(1);
+    const whatPrice = priceTicket[groupNumberTicket[a][0]];
+    // const whatDiscountPrice = discountTicket[groupNumberTicket[a][0]];
+    const lastData = {
+      ...data,
+      quantity: groupNumberTicket[a][1],
+      allOfTicket: arrTicket,
+      subTotal: whatPrice * groupNumberTicket[a][1],
+      price: whatPrice,
+      discountPrice: discountAgent,
+      discountSubtotal: discountAgent * groupNumberTicket[a][1],
+      bookDate: newdate,
+      exportUser,
+      departID,
+      paidDate: Date.now(),
+      groupTicket: groupNumberTicket[a][0],
+    };
+    if (Array.isArray(lastPost) && lastPost.length > 0) {
+      lastPost = lastPost[0];
+      doc = await Order.create({
+        ...lastData,
+        orderId: lastPost["orderId"] + 1,
+      });
+    } else {
+      doc = await Order.create({
+        ...lastData,
+      });
+    }
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: null,
   });
 });

@@ -16,7 +16,7 @@ const OrderSchema = new mongoose.Schema(
     },
     allOfTicket: {
       type: Array,
-      require: [true, "An Order must have a ticket"]
+      require: [true, "An Order must have a ticket"],
     },
     customerName: {
       type: String,
@@ -24,7 +24,7 @@ const OrderSchema = new mongoose.Schema(
     },
     customerCar: {
       type: String,
-      required: [true, "An Order must have a car "],
+      // required: [true, "An Order must have a car "],
     },
     customerPhone: {
       type: String,
@@ -50,16 +50,20 @@ const OrderSchema = new mongoose.Schema(
       type: String,
       required: [true, "An Order must have an Import User"],
     },
+    isAgent: {
+      type: Boolean,
+      default: false,
+    },
     departID: {
       type: mongoose.Schema.ObjectId,
-      required: [true, "An Order must have a Depart ID"],
-    }
+      // required: [true, "An Order must have a Depart ID"],
+    },
   },
   {
     // toJSON: { virtuals: true },
     // toObject: { virtuals: true },
     versionKey: false,
-    timestamps: true
+    timestamps: true,
   }
 );
 
