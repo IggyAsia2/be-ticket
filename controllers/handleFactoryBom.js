@@ -50,7 +50,12 @@ exports.getAll = (Model, popOptions, virtualId) =>
 
     const doc = await features.query;
 
-    const total = await Model.countDocuments(FilterCount(filter, req.query));
+    //
+
+    console.log(FilterCount(filter, req.query));
+
+    // const total = await Model.countDocuments(FilterCount(filter, req.query));
+    const total = await Model.countDocuments(filter);
 
     const pagi = {
       current: req.query.current * 1 || 1,
