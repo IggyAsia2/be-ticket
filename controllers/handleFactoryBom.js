@@ -69,6 +69,14 @@ exports.getAllReport = (Model, popOptions, virtualId) =>
   catchAsync(async (req, res, next) => {
     // To allow for nested GET arrivals on diary
     let filter = {};
+    if (
+      req.baseUrl === "/api/v1/orders" &&
+      selfOrderArr.includes(req.user.role.name)
+    ) {
+      Object.assign(filter, {
+        exportUser: req.user.email,
+      });
+    }
     let dataBig;
     const queryLength = Object.getOwnPropertyNames(req.query).length;
     if (

@@ -320,7 +320,6 @@ exports.exportAgentGroupTicket = catchAsync(async (req, res, next) => {
   const {
     groupNumberTicket,
     priceTicket,
-    discountTicket,
     data,
     exportUser,
     departID,
@@ -349,7 +348,6 @@ exports.exportAgentGroupTicket = catchAsync(async (req, res, next) => {
       .sort({ _id: -1 })
       .limit(1);
     const whatPrice = priceTicket[groupNumberTicket[a][0]];
-    // const whatDiscountPrice = discountTicket[groupNumberTicket[a][0]];
     const lastData = {
       ...data,
       quantity: groupNumberTicket[a][1],
@@ -360,6 +358,7 @@ exports.exportAgentGroupTicket = catchAsync(async (req, res, next) => {
       discountSubtotal: discountAgent * groupNumberTicket[a][1],
       bookDate: newdate,
       exportUser,
+      isAgent: true,
       departID,
       paidDate: Date.now(),
       groupTicket: groupNumberTicket[a][0],
