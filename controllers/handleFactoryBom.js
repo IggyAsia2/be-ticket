@@ -20,10 +20,7 @@ exports.getAll = (Model, popOptions, virtualId) =>
       });
     }
     let dataBig;
-    const queryLength = Object.getOwnPropertyNames(req.query).length;
-    if (
-      Object.getOwnPropertyNames(req.query)[queryLength - 1] === "bigTicket"
-    ) {
+    if (req.query.hasOwnProperty("bigTicket")) {
       dataBig = await GroupTicket.find(
         {
           bigTicket: req.query.bigTicket,
@@ -50,9 +47,9 @@ exports.getAll = (Model, popOptions, virtualId) =>
 
     const doc = await features.query;
 
-    const total = await Model.countDocuments(FilterCountOrder(filter, req.query));
-
-    // const total = 10
+    const total = await Model.countDocuments(
+      FilterCountOrder(filter, req.query)
+    );
 
     const pagi = {
       current: req.query.current * 1 || 1,

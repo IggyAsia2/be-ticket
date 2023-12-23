@@ -1,7 +1,7 @@
 exports.FilterCountOrder = (filter, queryObj, addOn) => {
   let source = { ...filter };
   const dest = { ...queryObj };
-  const excludedFields = ["current", "pageSize"];
+  const excludedFields = ["current", "pageSize", "sort", "bigTicket"];
   if (addOn && addOn.length) {
     addOn.forEach((item) => {
       excludedFields.push(item);
@@ -13,7 +13,7 @@ exports.FilterCountOrder = (filter, queryObj, addOn) => {
   // Tranformer
   let queryStr = JSON.stringify(source);
 
-  queryStr = queryStr.replace(/\b(gte|gt|lte|lt|in)\b/g, (match) => {
+  queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => {
     return `$${match}`;
   });
 
@@ -25,7 +25,7 @@ exports.FilterCountOrder = (filter, queryObj, addOn) => {
 exports.FilterCount = (filter, queryObj, addOn) => {
   let source = { ...filter };
   const dest = { ...queryObj };
-  const excludedFields = ["current", "pageSize"];
+  const excludedFields = ["current", "pageSize", "sort"];
   if (addOn && addOn.length) {
     addOn.forEach((item) => {
       excludedFields.push(item);
@@ -36,7 +36,6 @@ exports.FilterCount = (filter, queryObj, addOn) => {
 
   return source;
 };
-
 
 //     const queryObj = { ...this.queryString };
 //     const excludedFields = ["current", "pageSize", "sort", "fields", "name", "bigTicket"];
