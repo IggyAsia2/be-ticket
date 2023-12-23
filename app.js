@@ -94,7 +94,7 @@ app.use("/api/v1/tickets", ticketRouter);
 app.use("/api/v1/orders", orderRouter);
 app.use("/api/v1/departs", departRouter);
 app.use("/api/v1/importHistory", importHistoryRouter);
-app.use("/api/v1/suns", sunRouter);
+// app.use("/api/v1/suns", sunRouter);
 
 app.use("/api/v1/roles", roleRouter);
 app.use("/api/v1/rights", rightRouter);
