@@ -23,7 +23,7 @@ exports.updateBigTicket = catchAsync(async (req, res, next) => {
     const newHN = req.body.heightNote.split(",");
     data.heightNote = newHN;
   }
-  console.log(data);
+  // console.log(data);
 
   const doc = await BigTicket.findByIdAndUpdate(req.params.id, data, {
     new: true,
@@ -69,7 +69,7 @@ const storage = multer.diskStorage({
     cb(null, "public/image/BigTicket");
   },
   filename: function (req, file, cb) {
-    console.log(file);
+    // console.log(file);
     const filename = req.params.id + "." + file.originalname.split(".")[1];
     cb(null, filename);
     req.body.logo = filename;

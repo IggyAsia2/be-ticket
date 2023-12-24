@@ -92,7 +92,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
     data.password = "123456";
     data.passwordConfirm = "123456";
   }
-  console.log(data);
+  // console.log(data);
   const doc = await User.create(data);
   res.status(201).json({
     status: "success",

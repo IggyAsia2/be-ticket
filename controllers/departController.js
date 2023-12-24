@@ -14,7 +14,7 @@ exports.updateCashier = catchAsync(async (req, res, next) => {
   let obj = {};
   if (name) obj["cashiers.$[i].name"] = name;
   if (order) obj["cashiers.$[i].order"] = order;
-  console.log(obj);
+  // console.log(obj);
   const updateDocument = {
     $set: { ...obj },
   };
