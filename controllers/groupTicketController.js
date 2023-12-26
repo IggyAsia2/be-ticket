@@ -9,6 +9,7 @@ const APIFeaturesAdvanced = require("../utils/apiFeaturesAdvanced");
 const startOfDay = require("date-fns/startOfDay");
 const endOfDay = require("date-fns/endOfDay");
 const { FilterCount } = require("../helper/help");
+const axios = require("axios");
 
 exports.setBigTicketUserIds = (req, res, next) => {
   // Allow nested routes
@@ -58,8 +59,6 @@ exports.getAllGroupTickets = catchAsync(async (req, res, next) => {
     .pagination();
 
   const doc = await features.query;
-
-  console.log(FilterCount(filter, req.query, ["bigTicket", "sort"]));
 
   const total = await GroupTicket.countDocuments(
     FilterCount(filter, req.query, ["bigTicket", "sort"])
@@ -304,15 +303,31 @@ exports.exportGroupTicket = catchAsync(async (req, res, next) => {
 });
 
 exports.getMockData = catchAsync(async (req, res, next) => {
-  const data = await GroupTicket.find({ unit: req.query.unit });
-  const newArr = [];
-  for (let i = 0; i < data.length; i++) {
-    newArr.push(data[i].sku);
-  }
+  const { groupTicket, count } = req.body;
+  const newDate = new Date();
+  const timTem = newDate.getTime();
+  const options = {
+    method: "POST",
+    headers: {
+      "X-API-Key": "2470e260",
+    },
+    url: `https://my.api.mockaroo.com/inven_api2.json?count=${count}`,
+    data: {
+      groupTicket,
+      purchaseId: timTem,
+      importUser: req.user.email,
+      activatedDate: "2023-12-26",
+      expiredDate: "2030-01-01",
+      name: 'Vé tham quan'
+    },
+  };
+
+  const mockData = await axios(options);
+
+  await Ticket.create(mockData.data);
 
   res.status(200).json({
     status: "success",
-    data: newArr.toString(),
   });
 });
 

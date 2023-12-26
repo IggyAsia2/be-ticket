@@ -1,13 +1,8 @@
 const catchAsync = require("../utils/catchAsync");
 const querystring = require("querystring");
+const SunOrder = require("../models/sunOrderModel");
+const factory = require("./handlerFactory");
 const axios = require("axios");
-
-exports.setGroupTicketUserIds = (req, res, next) => {
-  // Allow nested routes
-  if (!req.body.groupTicket) req.body.groupTicket = req.params.groupTicket;
-  if (!req.body.user) req.body.user = req.user.id;
-  next();
-};
 
 const getSunAuth = async () => {
   const authData = {
@@ -28,11 +23,13 @@ const getSunAuth = async () => {
   return doc.data.access_token;
 };
 
-exports.getAllTickets = catchAsync(async (req, res, next) => {
+exports.getOrderSun = factory.getAll(SunOrder);
+
+exports.getAllSunSites = catchAsync(async (req, res, next) => {
   const access_token = await getSunAuth();
-  const sunQuery = `?page=${req.query.current}&limit=${req.query.pageSize}`
-  const url = `${process.env.SUN_URL}/ota/site/listing`
-  const newUrl = url.concat(sunQuery)
+  const sunQuery = `?page=${req.query.current}&limit=${req.query.pageSize}`;
+  const url = `${process.env.SUN_URL}/ota/site/listing`;
+  const newUrl = url.concat(sunQuery);
   const options = {
     method: "GET",
     headers: {
@@ -51,6 +48,65 @@ exports.getAllTickets = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: doc.data.result,
-    ...pagi
+    ...pagi,
+  });
+});
+
+exports.getSiteProducts = catchAsync(async (req, res, next) => {
+  const access_token = await getSunAuth();
+  const url = `${process.env.SUN_URL}/ota/product/listing?siteCodes[]=`;
+  const newUrl = url.concat(req.query.siteCodes);
+  const options = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+      "swg-subscription-key": process.env.swg,
+    },
+    url: newUrl,
+  };
+  const doc = await axios(options);
+  res.status(200).json({
+    status: "success",
+    data: doc.data.result,
+  });
+});
+
+exports.createOrderSun = catchAsync(async (req, res, next) => {
+  const access_token = await getSunAuth();
+  const url = `${process.env.SUN_URL}/ota/order/create-order`;
+  const optionsOrder = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+      "swg-subscription-key": process.env.swg,
+    },
+    url,
+    data: {
+      products: req.body.products,
+    },
+  };
+  const orderDoc = await axios(optionsOrder);
+
+  // console.log(orderDoc.data.result[0].orderCode);
+
+  const optionsGetOrder = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+      "swg-subscription-key": process.env.swg,
+    },
+    url: `${process.env.SUN_URL}/ota/order/get?orderCode=${orderDoc.data.result[0].orderCode}`,
+  };
+
+  const getOrderDoc = await axios(optionsGetOrder);
+
+  await SunOrder.create({
+    ...getOrderDoc.data.result,
+    orderUser: req.user.email,
+  });
+
+  res.status(200).json({
+    status: "success",
+    data: null,
   });
 });

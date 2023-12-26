@@ -10,6 +10,11 @@ router.use(authController.protect);
 // router.use(authController.restrictTo("admin"));
 // router.use();
 
-router.route("/").get(sunController.getAllTickets);
+router.route("/").get(sunController.getAllSunSites);
+router.route("/products").get(sunController.getSiteProducts);
+router
+  .route("/orders")
+  .get(sunController.getOrderSun)
+  .post(sunController.createOrderSun);
 
 module.exports = router;

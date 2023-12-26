@@ -7,6 +7,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const cronJob = require("./utils/cronJob.js");
 const AppError = require("./utils/appError");
@@ -55,7 +56,8 @@ const limiter = rateLimit({
 app.use("/api", limiter);
 
 // Body parser, reading data from body into req.body
-app.use(express.json({ limit: "1000kb" }));
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());

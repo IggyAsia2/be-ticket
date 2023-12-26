@@ -30,13 +30,15 @@ router
 
 router.route("/export").post(groupTicketController.exportTicket);
 
+// router.route("/mock").post(groupTicketController.getMockData);
+
 router.route("/export-group").post(groupTicketController.exportGroupTicket);
 
 router.route("/export-agent-group").post(groupTicketController.exportAgentGroupTicket);
 
 router.route("/stock/:id").get(groupTicketController.updateStock);
 
-router.route("/mock").get(groupTicketController.getMockData);
+router.route("/mock").post(groupTicketController.getMockData);
 
 router
   .route("/:id")
