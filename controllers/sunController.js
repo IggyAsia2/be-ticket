@@ -1,6 +1,9 @@
 const catchAsync = require("../utils/catchAsync");
 const querystring = require("querystring");
 const SunOrder = require("../models/sunOrderModel");
+const GroupTicket = require("../models/groupTicketModel");
+const Ticket = require("../models/ticketModel");
+const { findDeselectedItem } = require("../helper/help");
 const factory = require("./handlerFactory");
 const axios = require("axios");
 
@@ -72,41 +75,72 @@ exports.getSiteProducts = catchAsync(async (req, res, next) => {
 });
 
 exports.createOrderSun = catchAsync(async (req, res, next) => {
-  const access_token = await getSunAuth();
-  const url = `${process.env.SUN_URL}/ota/order/create-order`;
-  const optionsOrder = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-      "swg-subscription-key": process.env.swg,
-    },
-    url,
-    data: {
-      products: req.body.products,
-    },
-  };
-  const orderDoc = await axios(optionsOrder);
+  const filterArr = req.body.products.map((el) => el.productCode);
 
-  // console.log(orderDoc.data.result[0].orderCode);
+  const groupTicketDoc = await GroupTicket.find({ sku: { $in: filterArr } });
 
-  const optionsGetOrder = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-      "swg-subscription-key": process.env.swg,
-    },
-    url: `${process.env.SUN_URL}/ota/order/get?orderCode=${orderDoc.data.result[0].orderCode}`,
-  };
+  const newDoc = groupTicketDoc.map((el) => el.sku);
 
-  const getOrderDoc = await axios(optionsGetOrder);
+  const missing = findDeselectedItem(filterArr, newDoc);
 
-  await SunOrder.create({
-    ...getOrderDoc.data.result,
-    orderUser: req.user.email,
-  });
+  if (missing.length) {
+    res.status(400).json({
+      status: "error",
+      message: `Bạn chưa tạo mã vé: ${missing}`,
+      // data: null,
+    });
+  } else {
+    const access_token = await getSunAuth();
+    const url = `${process.env.SUN_URL}/ota/order/create-order`;
+    const optionsOrder = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        "swg-subscription-key": process.env.swg,
+      },
+      url,
+      data: {
+        products: req.body.products,
+      },
+    };
+    const orderDoc = await axios(optionsOrder);
 
-  res.status(200).json({
-    status: "success",
-    data: null,
-  });
+    const orderCode = orderDoc.data.result[0].orderCode;
+    const optionsGetOrder = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        "swg-subscription-key": process.env.swg,
+      },
+      url: `${process.env.SUN_URL}/ota/order/get?orderCode=${orderCode}`,
+    };
+
+    const getOrderDoc = await axios(optionsGetOrder);
+
+    await SunOrder.create({
+      ...getOrderDoc.data.result,
+      orderUser: req.user.email,
+    });
+
+    const ticketArr = getOrderDoc.data.result.items
+    for (let i = 0; i < ticketArr.length; i++) {
+      const ticketImportArr = ticketArr[i].products.ticket.map((el) => {
+        return {
+          name: "Vé tham quan",
+          groupTicket: groupTicketDoc[i]._id,
+          serial: el.ticketNumber,
+          purchaseId: orderCode,
+          activatedDate: el.validDateFrom,
+          expiredDate: el.validDateTo,
+          importUser: req.user.email,
+        }
+      });
+      await Ticket.create(ticketImportArr);
+    }
+
+    res.status(200).json({
+      status: "success",
+      // data: null,
+    });
+  }
 });

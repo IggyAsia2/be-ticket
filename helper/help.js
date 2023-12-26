@@ -37,6 +37,15 @@ exports.FilterCount = (filter, queryObj, addOn) => {
   return source;
 };
 
+exports.findDeselectedItem = (array1, array2) => {
+  return array1.filter(
+    (
+      (i) => (a) =>
+        a !== array2[i] || !++i
+    )(0)
+  );
+};
+
 //     const queryObj = { ...this.queryString };
 //     const excludedFields = ["current", "pageSize", "sort", "fields", "name", "bigTicket"];
 //     excludedFields.forEach((el) => delete queryObj[el]);
