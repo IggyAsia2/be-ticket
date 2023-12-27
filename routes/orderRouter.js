@@ -37,9 +37,13 @@ router.route("/cancel/:id").post(orderController.cancelOrder);
 
 router.route("/driver").get(orderController.statisticDriver);
 
-router.route("/:id").get(orderController.getOrder).patch(
-  // permission("Update Ticket"),
-  orderController.updateOrder
-);
+router
+  .route("/:id")
+  .get(orderController.getOrder)
+  .patch(orderController.updateOrder);
+
+router.route("/agent/:id").patch(orderController.updateAgentOrder);
+
+// router.route("/agent/all").post(orderController.updateAgentManyOrder);
 
 module.exports = router;

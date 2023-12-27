@@ -1,5 +1,6 @@
 const Order = require("../models/orderModer");
 const Ticket = require("../models/ticketModel");
+const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
 const factoryBom = require("./handleFactoryBom");
@@ -45,7 +46,38 @@ exports.updateOrder = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: null,
+    // data: valiDoc,
   });
+});
+
+exports.updateAgentOrder = catchAsync(async (req, res, next) => {
+  const orderId = req.params.id;
+  const valiDoc = await Order.findById(orderId);
+  const userDoc = req.user;
+  if (valiDoc.state === "Pending") {
+    if (valiDoc.isAgent && userDoc.isAgent) {
+      const monery = valiDoc.subTotal - valiDoc.discountSubtotal;
+      const newMoney = userDoc.moneny - monery;
+      if (userDoc.moneny > monery) {
+        await User.findByIdAndUpdate(userDoc._id, {
+          moneny: newMoney,
+        });
+        await Order.findByIdAndUpdate(orderId, req.body, {
+          new: true,
+          runValidators: true,
+        });
+        res.status(200).json({
+          status: "success",
+          data: null,
+        });
+      } else {
+        res.status(400).json({
+          status: "error",
+          message: "Tài khoản không đủ tiền vui lòng nạp thêm!",
+        });
+      }
+    }
+  }
 });
 
 exports.reduceOrder = catchAsync(async (req, res, next) => {
@@ -154,6 +186,49 @@ exports.updateManyOrder = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
+
+// exports.updateAgentManyOrder = catchAsync(async (req, res, next) => {
+//   const data = req.body.key;
+//   const userDoc = req.user;
+//   if (data.length) {
+//     for (let id of data) {
+//       const valiDoc = await Order.findById(id);
+//       if (valiDoc.state === "Pending") {
+//         if (valiDoc.isAgent && userDoc.isAgent) {
+//           const monery = valiDoc.subTotal - valiDoc.discountSubtotal;
+//           const newMoney = userDoc.moneny - monery;
+//           if (userDoc.moneny > monery) {
+//             await User.findByIdAndUpdate(userDoc._id, {
+//               moneny: newMoney,
+//             });
+//             await Order.findByIdAndUpdate(
+//               id,
+//               { status: "Pending" },
+//               {
+//                 new: true,
+//                 runValidators: true,
+//               }
+//             );
+//             res.status(200).json({
+//               status: "success",
+//               data: null,
+//             });
+//           } else {
+//             res.status(400).json({
+//               status: "error",
+//               message: "Tài khoản không đủ tiền vui lòng nạp thêm!",
+//             });
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   res.status(200).json({
+//     status: "success",
+//     data: null,
+//   });
+// });
 
 exports.sendEmailOrder = catchAsync(async (req, res, next) => {
   const { email, subject, html } = req.body;
