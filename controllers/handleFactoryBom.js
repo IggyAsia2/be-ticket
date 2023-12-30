@@ -44,6 +44,8 @@ exports.getAll = (Model, popOptions, virtualId) =>
       .sort()
       .limitFields()
       .pagination();
+    
+    console.log(req.query);
 
     const doc = await features.query;
 

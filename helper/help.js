@@ -13,7 +13,7 @@ exports.FilterCountOrder = (filter, queryObj, addOn) => {
   // Tranformer
   let queryStr = JSON.stringify(source);
 
-  queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => {
+  queryStr = queryStr.replace(/\b(gte|gt|lte|lt|regex)\b/g, (match) => {
     return `$${match}`;
   });
 
