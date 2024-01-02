@@ -45,7 +45,7 @@ exports.getAll = (Model, popOptions, virtualId) =>
       .limitFields()
       .pagination();
     
-    console.log(req.query);
+    // console.log(req.query);
 
     const doc = await features.query;
 

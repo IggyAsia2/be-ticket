@@ -36,13 +36,25 @@ exports.createOrder = catchAsync(async (req, res, next) => {
 exports.updateOrder = catchAsync(async (req, res, next) => {
   const orderId = req.params.id;
   const valiDoc = await Order.findById(orderId);
-  if (valiDoc.state === "Pending") {
+  if (valiDoc.state === "Pending" && req.body.state === "Finished") {
+    await Order.findByIdAndUpdate(
+      orderId,
+      { state: req.body.state },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+  }
+
+  const { isUp } = req.body;
+
+  if (valiDoc.state === "Finished" && isUp === true) {
     await Order.findByIdAndUpdate(orderId, req.body, {
       new: true,
       runValidators: true,
     });
   }
-
   res.status(200).json({
     status: "success",
     data: null,
@@ -172,6 +184,31 @@ exports.updateManyOrder = catchAsync(async (req, res, next) => {
         await Order.findByIdAndUpdate(
           id,
           { state: "Finished" },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+      }
+    }
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: null,
+  });
+});
+
+exports.updateThor = catchAsync(async (req, res, next) => {
+  const data = req.body.key;
+  const { customerName, customerCar, customerPhone } = req.body;
+  if (data.length) {
+    for (let id of data) {
+      const valiDoc = await Order.findById(id);
+      if (valiDoc.state === "Finished") {
+        await Order.findByIdAndUpdate(
+          id,
+          { customerName, customerCar, customerPhone },
           {
             new: true,
             runValidators: true,

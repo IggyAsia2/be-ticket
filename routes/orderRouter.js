@@ -25,6 +25,8 @@ router
 
 router.route("/reduce").post(orderController.reduceOrder);
 
+router.route("/thor").patch(orderController.updateThor);
+
 router.route("/report").get(orderController.getAllReport);
 
 router.route("/all").post(orderController.updateManyOrder);
