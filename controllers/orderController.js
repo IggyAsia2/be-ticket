@@ -208,7 +208,7 @@ exports.updateThor = catchAsync(async (req, res, next) => {
       if (valiDoc.state === "Finished") {
         await Order.findByIdAndUpdate(
           id,
-          { customerName, customerCar, customerPhone },
+          { customerName, customerCar: customerCar.toLowerCase(), customerPhone },
           {
             new: true,
             runValidators: true,
