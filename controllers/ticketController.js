@@ -46,17 +46,19 @@ exports.importTicket = catchAsync(async (req, res, next) => {
       quantity: el.quantity,
     };
   });
-  await ImportHistory.create({
-    importUser,
-    importID,
-    ticket: newArr,
-  });
+
   await Ticket.syncIndexes();
   try {
     await Ticket.create(data);
     res.status(200).json({
       status: "success",
       data: null,
+    });
+    await ImportHistory.create({
+      importUser,
+      importID,
+      importType: 'Excel',
+      ticket: newArr,
     });
   } catch (error) {
     return next(

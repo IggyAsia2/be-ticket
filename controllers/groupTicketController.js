@@ -1,5 +1,6 @@
 const GroupTicket = require("../models/groupTicketModel");
 const Ticket = require("../models/ticketModel");
+const ImportHistory = require("../models/importHistoryModel");
 const Order = require("../models/orderModer");
 const factory = require("./handlerFactory");
 const catchAsync = require("../utils/catchAsync");
@@ -318,13 +319,32 @@ exports.getMockData = catchAsync(async (req, res, next) => {
       importUser: req.user.email,
       activatedDate: "2023-12-26",
       expiredDate: "2030-01-01",
-      name: 'Vé tham quan'
+      name: "Vé tham quan",
     },
   };
 
   const mockData = await axios(options);
 
+  const groupTicketData = await GroupTicket.findById(groupTicket);
+
+  const newArr = [
+    {
+      sku: groupTicketData.sku,
+      name: groupTicketData.name,
+      bigTicket: groupTicketData.bigTicket.name,
+      unit: groupTicketData.unit,
+      quantity: count,
+    },
+  ];
+
   await Ticket.create(mockData.data);
+
+  await ImportHistory.create({
+    importUser: req.user.email,
+    importID: timTem,
+    importType: "Random",
+    ticket: newArr,
+  });
 
   res.status(200).json({
     status: "success",

@@ -21,6 +21,11 @@ const ImportHistorySchema = new mongoose.Schema(
       type: String,
       required: [true, "An Order must have an Import ID"],
     },
+    importType: {
+      type: String,
+      enum: ["Excel", "Random"],
+      required: [true, "An Order must have an Import Type"],
+    },
     ticket: {
       type: [ticketSchema],
     },
