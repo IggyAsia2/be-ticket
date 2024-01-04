@@ -138,7 +138,7 @@ exports.restrictTo = (...roles) => {
 
 exports.userEmail = () => {
   return (req, res, next) => {
-    console.log(req.user);
+    // console.log(req.user);
     return req.user.email;
   };
 };
