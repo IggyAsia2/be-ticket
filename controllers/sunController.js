@@ -5,6 +5,7 @@ const GroupTicket = require("../models/groupTicketModel");
 const Ticket = require("../models/ticketModel");
 const { findDeselectedItem } = require("../helper/help");
 const factory = require("./handlerFactory");
+const factoryBom = require("./handleFactoryBom");
 const axios = require("axios");
 
 const getSunAuth = async () => {
@@ -27,6 +28,8 @@ const getSunAuth = async () => {
 };
 
 exports.getOrderSun = factory.getAll(SunOrder);
+
+exports.getReportSun = factoryBom.getAllReportSun(SunOrder);
 
 exports.getAllSunSites = catchAsync(async (req, res, next) => {
   const access_token = await getSunAuth();
@@ -76,6 +79,7 @@ exports.getSiteProducts = catchAsync(async (req, res, next) => {
 
 exports.createOrderSun = catchAsync(async (req, res, next) => {
   const filterArr = req.body.products.map((el) => el.productCode);
+  const { sunName, siteCode } = req.body;
 
   const groupTicketDoc = await GroupTicket.find({ sku: { $in: filterArr } });
 
@@ -119,10 +123,12 @@ exports.createOrderSun = catchAsync(async (req, res, next) => {
 
     await SunOrder.create({
       ...getOrderDoc.data.result,
+      sunName: sunName,
+      siteCode: siteCode,
       orderUser: req.user.email,
     });
 
-    const ticketArr = getOrderDoc.data.result.items
+    const ticketArr = getOrderDoc.data.result.items;
     for (let i = 0; i < ticketArr.length; i++) {
       const ticketImportArr = ticketArr[i].products.ticket.map((el) => {
         return {
@@ -133,7 +139,7 @@ exports.createOrderSun = catchAsync(async (req, res, next) => {
           activatedDate: el.validDateFrom,
           expiredDate: el.validDateTo,
           importUser: req.user.email,
-        }
+        };
       });
       await Ticket.create(ticketImportArr);
     }

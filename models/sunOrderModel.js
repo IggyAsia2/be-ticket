@@ -10,6 +10,14 @@ const sunOrderSchema = new mongoose.Schema(
       type: String,
       required: [true, "An Order must have an Order Code"],
     },
+    sunName: {
+      type: String,
+      required: [true, "An Order must have a sun name"],
+    },
+    siteCode: {
+      type: String,
+      required: [true, "An Order must have a site code"],
+    },
     orderStatus: String,
     orderDate: Date,
     totalOrderPrice: Number,
@@ -23,7 +31,7 @@ const sunOrderSchema = new mongoose.Schema(
   },
   {
     versionKey: false,
-    timestamps: true,
+    // timestamps: true,
   }
 );
 

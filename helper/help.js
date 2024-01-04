@@ -34,6 +34,15 @@ exports.FilterCount = (filter, queryObj, addOn) => {
   excludedFields.forEach((el) => delete dest[el]);
   Object.assign(source, dest);
 
+  // Tranformer
+  let queryStr = JSON.stringify(source);
+
+  queryStr = queryStr.replace(/\b(gte|gt|lte|lt|regex)\b/g, (match) => {
+    return `$${match}`;
+  });
+
+  source = JSON.parse(queryStr);
+
   return source;
 };
 

@@ -120,6 +120,7 @@ exports.getOne = (Model, name, popOptions) =>
 exports.getAll = (Model, popOptions, virtualId) =>
   catchAsync(async (req, res, next) => {
     // To allow for nested GET arrivals on diary
+    console.log(req.query);
 
     let filter = {};
     if (req.params[virtualId]) filter = { [virtualId]: req.params[virtualId] };

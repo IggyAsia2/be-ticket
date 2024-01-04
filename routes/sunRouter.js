@@ -16,5 +16,8 @@ router
   .route("/orders")
   .get(sunController.getOrderSun)
   .post(sunController.createOrderSun);
+router
+  .route("/reports")
+  .get(sunController.getReportSun)
 
 module.exports = router;
