@@ -60,15 +60,15 @@ exports.getAllSunSites = catchAsync(async (req, res, next) => {
 
 exports.getSiteProducts = catchAsync(async (req, res, next) => {
   const access_token = await getSunAuth();
-  const url = `${process.env.SUN_URL}/ota/product/listing?siteCodes[]=`;
-  const newUrl = url.concat(req.query.siteCodes);
+  const url = `${process.env.SUN_URL}/ota/product/listing?siteCodes[]=${req.query.siteCodes}&date=${req.query.date}`;
+  // const newUrl = url.concat(req.query.siteCodes);
   const options = {
     method: "GET",
     headers: {
       Authorization: `Bearer ${access_token}`,
       "swg-subscription-key": process.env.swg,
     },
-    url: newUrl,
+    url,
   };
   const doc = await axios(options);
   res.status(200).json({
