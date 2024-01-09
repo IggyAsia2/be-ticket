@@ -7,6 +7,7 @@ const { findDeselectedItem } = require("../helper/help");
 const factory = require("./handlerFactory");
 const factoryBom = require("./handleFactoryBom");
 const axios = require("axios");
+const User = require("../models/userModel");
 
 const getSunAuth = async () => {
   const authData = {
@@ -127,6 +128,12 @@ exports.createOrderSun = catchAsync(async (req, res, next) => {
       siteCode: siteCode,
       orderUser: req.user.email,
     });
+
+    if (req.user.email === "vsttravel@gmail.com") {
+      await User.findByIdAndUpdate(req.user.id, {
+        moneny: req.user.moneny - getOrderDoc.data.result.totalOrderPrice,
+      });
+    }
 
     const ticketArr = getOrderDoc.data.result.items;
     for (let i = 0; i < ticketArr.length; i++) {

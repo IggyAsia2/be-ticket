@@ -65,7 +65,7 @@ exports.updateOrder = catchAsync(async (req, res, next) => {
 exports.updateAgentOrder = catchAsync(async (req, res, next) => {
   const orderId = req.params.id;
   const valiDoc = await Order.findById(orderId);
-  const userDoc = req.user;
+  const userDoc = req.user; 
   if (valiDoc.state === "Pending") {
     if (valiDoc.isAgent && userDoc.isAgent) {
       const monery = valiDoc.subTotal - valiDoc.discountSubtotal;
