@@ -117,3 +117,96 @@ exports.deleteManyUser = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
+
+exports.getSubUser = catchAsync(async (req, res, next) => {
+  // query.populate({
+  //   path: "subUser",
+  // });
+  const doc = await User.findById(req.user.id, "subUser");
+
+  res.status(200).json({
+    status: "success",
+    data: doc.subUser,
+  });
+});
+
+exports.insertSubUser = catchAsync(async (req, res, next) => {
+  const { id } = req.user;
+  if (req.body.name === "Admin") {
+    res.status(400).json({
+      message: "Xin mời đặt tên khác!",
+    });
+  } else {
+    const insertDocument = {
+      $push: { subUser: { ...req.body } },
+    };
+
+    await User.findByIdAndUpdate(id, insertDocument);
+    res.status(200).json({
+      status: "success",
+      data: null,
+    });
+  }
+});
+
+exports.deleteSubUser = catchAsync(async (req, res, next) => {
+  const { subID } = req.params;
+  const deleteDocument = {
+    $pull: { subUser: { _id: subID } },
+  };
+
+  await User.findByIdAndUpdate(req.user.id, deleteDocument);
+  res.status(200).json({
+    status: "success",
+    data: null,
+  });
+});
+
+exports.updateSubUser = catchAsync(async (req, res, next) => {
+  const { subID } = req.params;
+  const { pin, name } = req.body;
+  if (name === "Admin") {
+    res.status(400).json({
+      message: "Xin mời đặt tên khác!",
+    });
+  } else {
+    let obj = {};
+    if (name) obj["subUser.$[i].name"] = name;
+    if (pin) obj["subUser.$[i].pin"] = pin;
+    // console.log(obj);
+    const updateDocument = {
+      $set: { ...obj },
+    };
+
+    const options = {
+      arrayFilters: [
+        {
+          "i._id": subID,
+        },
+      ],
+    };
+    await User.findByIdAndUpdate(req.user.id, updateDocument, options);
+    res.status(200).json({
+      status: "success",
+      data: null,
+    });
+  }
+});
+
+exports.checkPinSubUser = catchAsync(async (req, res, next) => {
+  const { pin, subID } = req.body;
+  const doc = await User.findById(req.user.id, "subUser");
+  console.log(doc.subUser, subID);
+  const result = await doc.subUser.find(({ _id }) => _id.toString() === subID);
+
+  if (result.pin === pin) {
+    res.status(200).json({
+      status: "success",
+      data: result.name,
+    });
+  } else {
+    res.status(400).json({
+      message: "Mã pin không đúng, vui lòng nhập lại",
+    });
+  }
+});

@@ -4,6 +4,23 @@ const validator = require("validator");
 const bcrypt = require("bcrypt");
 const { type } = require("os");
 
+const subUserSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    trim: true,
+    maxlength: [20, "A Cashier must have less or equals than 20 characters"],
+    minlength: [3, "A Cashier must have less or equals than 3 characters"],
+  },
+  pin: {
+    type: String,
+    required: [true, "Please provide a pin"],
+    minlength: 4,
+    maxlength: 4,
+    default: '1234',
+    select: false,
+  },
+});
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -31,6 +48,15 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       required: [true, "Please provide your Agent"],
       default: false,
+    },
+    subUser: {
+      type: [subUserSchema],
+      default: [
+        {
+          name: "Admin",
+          pin: "1234",
+        },
+      ],
     },
     moneny: {
       type: Number,

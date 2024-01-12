@@ -16,7 +16,7 @@ const cashierSchema = new mongoose.Schema({
     // select: false,
   },
   note: String,
-});
+}); 
 
 const departSchema = new mongoose.Schema(
   {

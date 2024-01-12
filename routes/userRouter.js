@@ -25,35 +25,51 @@ router.get("/role/:id", userController.getRoleByUser);
 router.use(authController.protect);
 // router.use(authController.restrictTo("admin"));
 
-router
-  .route("/role")
-  .get(
-    // permission("Get User"), 
-  userController.getAllUserByRole);
+router.route("/role").get(
+  // permission("Get User"),
+  userController.getAllUserByRole
+);
 
 router
   .route("/")
   .get(
-    // permission("Get User"), 
-  userController.getAllUsers)
+    // permission("Get User"),
+    userController.getAllUsers
+  )
   .post(
-    // permission("Create User"), 
-  userController.createUser);
+    // permission("Create User"),
+    userController.createUser
+  );
+
+router.route("/all").post(
+  // permission("Delete User"),
+  userController.deleteManyUser
+);
 
 router
-  .route("/all")
-  .post(
-    // permission("Delete User"), 
-  userController.deleteManyUser);
+  .route("/sub-user")
+  .post(userController.insertSubUser)
+  .get(userController.getSubUser);
+
+router
+  .route("/sub-user/check-pin")
+  .post(userController.checkPinSubUser)
+
+router
+  .route("/sub-user/:subID")
+  .delete(userController.deleteSubUser)
+  .patch(userController.updateSubUser);
 
 router
   .route("/:id")
   .get(userController.getUser)
   .patch(
-    // permission("Update User"), 
-    userController.updateUser)
+    // permission("Update User"),
+    userController.updateUser
+  )
   .delete(
-    // permission("Delete User"), 
-  userController.deleteUser);
+    // permission("Delete User"),
+    userController.deleteUser
+  );
 
 module.exports = router;
