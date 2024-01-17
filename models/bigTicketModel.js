@@ -3,6 +3,10 @@ const slugify = require("slugify");
 
 const bigTicketSchema = new mongoose.Schema(
   {
+    order: {
+      type: Number,
+      default: 10
+    },
     name: {
       type: String,
       required: [true, "A Big ticket must have a name"],

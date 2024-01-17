@@ -196,7 +196,6 @@ exports.updateSubUser = catchAsync(async (req, res, next) => {
 exports.checkPinSubUser = catchAsync(async (req, res, next) => {
   const { pin, subID } = req.body;
   const doc = await User.findById(req.user.id, "subUser");
-  console.log(doc.subUser, subID);
   const result = await doc.subUser.find(({ _id }) => _id.toString() === subID);
 
   if (result.pin === pin) {
