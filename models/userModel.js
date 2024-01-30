@@ -16,8 +16,20 @@ const subUserSchema = new mongoose.Schema({
     required: [true, "Please provide a pin"],
     minlength: 4,
     maxlength: 4,
-    default: '1234',
+    default: "1234",
     select: false,
+  },
+});
+
+const discountSchema = new mongoose.Schema({
+  bigID: {
+    type: String,
+    unique: true,
+    required: [true, "Please provide a bigID"],
+  },
+  list: {
+    type: Object,
+    required: [true, "Please provide a discountList"],
   },
 });
 
@@ -62,9 +74,12 @@ const userSchema = new mongoose.Schema(
       type: Number,
       min: [0, "Must be at least 0"],
     },
-    discountAgent: {
-      type: Number,
+    discountList: {
+      type: [discountSchema],
     },
+    // discountAgent: {
+    //   type: Number,
+    // },
     password: {
       type: String,
       required: [true, "Please provide a password"],
@@ -97,7 +112,6 @@ const userSchema = new mongoose.Schema(
 userSchema.pre("save", async function (next) {
   // Only run this function if password was acttually modified
   if (!this.isModified("password")) return next();
-
   // Hass the password with case of 12
   this.password = await bcrypt.hash(this.password, 12);
 

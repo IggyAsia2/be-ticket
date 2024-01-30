@@ -209,3 +209,33 @@ exports.checkPinSubUser = catchAsync(async (req, res, next) => {
     });
   }
 });
+
+exports.updateDiscount = catchAsync(async (req, res, next) => {
+  const { userID, bigID, list } = req.body;
+  const user = await User.findById(userID);
+  const findUser = user.discountList.find((el) => el.bigID === bigID);
+  if (findUser) {
+    let obj = {};
+    if (list) obj["discountList.$[i].list"] = list;
+    const updateDocument = {
+      $set: { ...obj },
+    };
+
+    const options = {
+      arrayFilters: [
+        {
+          "i._id": findUser._id,
+        },
+      ],
+    };
+    await User.findByIdAndUpdate(userID, updateDocument, options);
+  } else {
+    const insertDocument = {
+      $push: { discountList: { bigID, list } },
+    };
+    await User.findByIdAndUpdate(userID, insertDocument);
+  }
+  res.status(200).json({
+    status: "success",
+  });
+});

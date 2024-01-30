@@ -51,9 +51,9 @@ router
   .post(userController.insertSubUser)
   .get(userController.getSubUser);
 
-router
-  .route("/sub-user/check-pin")
-  .post(userController.checkPinSubUser)
+router.route("/discount").patch(userController.updateDiscount);
+
+router.route("/sub-user/check-pin").post(userController.checkPinSubUser);
 
 router
   .route("/sub-user/:subID")

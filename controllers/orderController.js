@@ -65,12 +65,13 @@ exports.updateOrder = catchAsync(async (req, res, next) => {
 exports.updateAgentOrder = catchAsync(async (req, res, next) => {
   const orderId = req.params.id;
   const valiDoc = await Order.findById(orderId);
-  const userDoc = req.user; 
+  const userDoc = req.user;
   if (valiDoc.state === "Pending") {
     if (valiDoc.isAgent && userDoc.isAgent) {
       const monery = valiDoc.subTotal - valiDoc.discountSubtotal;
+      console.log(userDoc.moneny, monery);
       const newMoney = userDoc.moneny - monery;
-      if (userDoc.moneny > monery) {
+      if (userDoc.moneny >= monery) {
         await User.findByIdAndUpdate(userDoc._id, {
           moneny: newMoney,
         });
@@ -208,7 +209,11 @@ exports.updateThor = catchAsync(async (req, res, next) => {
       if (valiDoc.state === "Finished") {
         await Order.findByIdAndUpdate(
           id,
-          { customerName, customerCar: customerCar.toLowerCase(), customerPhone },
+          {
+            customerName,
+            customerCar: customerCar.toLowerCase(),
+            customerPhone,
+          },
           {
             new: true,
             runValidators: true,

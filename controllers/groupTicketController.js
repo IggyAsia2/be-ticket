@@ -354,13 +354,15 @@ exports.getMockData = catchAsync(async (req, res, next) => {
 exports.exportAgentGroupTicket = catchAsync(async (req, res, next) => {
   const {
     groupNumberTicket,
+    discountTicket,
     priceTicket,
     data,
     exportUser,
     departID,
     bookDate,
   } = req.body;
-  const discountAgent = req.user.discountAgent;
+  // const discountAgent = req.user.discountAgent;
+  // const discountAgent = discountTicket[groupNumberTicket[a][0]];
   const newdate = bookDate.split("/").reverse().join("/");
   for (let a = 0; a < groupNumberTicket.length; a++) {
     const arrTicket = [];
@@ -383,6 +385,10 @@ exports.exportAgentGroupTicket = catchAsync(async (req, res, next) => {
       .sort({ _id: -1 })
       .limit(1);
     const whatPrice = priceTicket[groupNumberTicket[a][0]];
+    let discountAgent = 0;
+    if (Object.keys(discountTicket).length) {
+      discountAgent = discountTicket[groupNumberTicket[a][0]];
+    }
     const lastData = {
       ...data,
       quantity: groupNumberTicket[a][1],
