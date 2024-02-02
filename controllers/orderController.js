@@ -62,6 +62,33 @@ exports.updateOrder = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.updatePriceOrder = catchAsync(async (req, res, next) => {
+  const orderId = req.params.id;
+  const { price, discountPrice } = req.body;
+  const doc = {};
+  const valiDoc = await Order.findById(orderId);
+  if (valiDoc.state === "Finished") {
+    console.log(req.body);
+    if (price !== undefined) {
+      doc.price = price;
+      doc.subTotal = price * valiDoc.quantity;
+    }
+    if (discountPrice !== undefined) {
+      doc.discountPrice = discountPrice;
+      doc.discountSubtotal = discountPrice * valiDoc.quantity;
+    }
+    await Order.findByIdAndUpdate(orderId, doc, {
+      new: true,
+      runValidators: true,
+    });
+  }
+  res.status(200).json({
+    status: "success",
+    data: null,
+    // data: valiDoc,
+  });
+});
+
 exports.updateAgentOrder = catchAsync(async (req, res, next) => {
   const orderId = req.params.id;
   const valiDoc = await Order.findById(orderId);

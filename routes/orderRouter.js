@@ -39,6 +39,8 @@ router.route("/cancel/:id").post(orderController.cancelOrder);
 
 router.route("/driver").get(orderController.statisticDriver);
 
+router.route("/price/:id").patch(orderController.updatePriceOrder);
+
 router
   .route("/:id")
   .get(orderController.getOrder)
