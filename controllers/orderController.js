@@ -330,3 +330,5 @@ exports.statisticDriver = catchAsync(async (req, res, next) => {
     data: count,
   });
 });
+
+exports.getAllAgentReport = factoryBom.getAllReport(Order, null, "groupTicket");

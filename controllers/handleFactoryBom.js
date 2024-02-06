@@ -2,7 +2,11 @@ const catchAsync = require("../utils/catchAsync");
 const GroupTicket = require("../models/groupTicketModel");
 const User = require("../models/userModel");
 const APIFeaturesAdvanced = require("../utils/apiFeaturesAdvanced");
-const { groupByFunc, getUserId, groupSunReportByFunc } = require("../helper/arrayHelper");
+const {
+  groupByFunc,
+  getUserId,
+  groupSunReportByFunc,
+} = require("../helper/arrayHelper");
 const { FilterCountOrder } = require("../helper/help");
 
 const selfOrderArr = ["sale", "agent"];
@@ -90,9 +94,11 @@ exports.getAllReport = (Model, popOptions, virtualId) =>
         "_id"
       ).exec();
       dataBig = dataBig.map((el) => el._id.toString());
-      filter = { groupTicket: { $in: dataBig } };
+      Object.assign(filter, { groupTicket: { $in: dataBig } });
+      // filter = { groupTicket: { $in: dataBig } };
     }
 
+    console.log(filter);
     if (req.params[virtualId]) filter = { [virtualId]: req.params[virtualId] };
     if (req.query.name) filter = { name: new RegExp(req.query.name, "i") };
     // Execute Query

@@ -29,6 +29,8 @@ router.route("/thor").patch(orderController.updateThor);
 
 router.route("/report").get(orderController.getAllReport);
 
+router.route("/agent-report").get(orderController.getAllAgentReport);
+
 router.route("/all").post(orderController.updateManyOrder);
 
 router.route("/send-mail").post(orderController.sendEmailOrder);
