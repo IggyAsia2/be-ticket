@@ -71,6 +71,16 @@ exports.getAllGroupTickets = catchAsync(async (req, res, next) => {
         groupTicket: el._id,
         state: "Delivered",
       }).countDocuments();
+      const endDate = startOfDay(new Date());
+      const startDate = endOfDay(new Date());
+
+      const numberValidPending = await Ticket.where({
+        groupTicket: el._id,
+        state: "Pending",
+        activatedDate: { $lte: startDate },
+        expiredDate: { $gte: endDate },
+      }).countDocuments();
+
       const numberPending = await Ticket.where({
         groupTicket: el._id,
         state: "Pending",
@@ -78,7 +88,8 @@ exports.getAllGroupTickets = catchAsync(async (req, res, next) => {
       return {
         ...el._doc,
         delivered: numberDelivered,
-        pending: numberPending,
+        pending: numberValidPending,
+        invalidPending: numberPending - numberValidPending,
       };
     });
   }
