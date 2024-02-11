@@ -77,8 +77,8 @@ exports.getAllGroupTickets = catchAsync(async (req, res, next) => {
       const numberValidPending = await Ticket.where({
         groupTicket: el._id,
         state: "Pending",
-        activatedDate: { $lte: startDate },
-        expiredDate: { $gte: endDate },
+        // activatedDate: { $lte: startDate },
+        expiredDate: { $lte: endDate },
       }).countDocuments();
 
       const numberPending = await Ticket.where({
@@ -88,8 +88,8 @@ exports.getAllGroupTickets = catchAsync(async (req, res, next) => {
       return {
         ...el._doc,
         delivered: numberDelivered,
-        pending: numberValidPending,
-        invalidPending: numberPending - numberValidPending,
+        pending: numberPending - numberValidPending,
+        invalidPending: numberValidPending,
       };
     });
   }
