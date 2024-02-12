@@ -57,7 +57,7 @@ exports.importTicket = catchAsync(async (req, res, next) => {
     await ImportHistory.create({
       importUser,
       importID,
-      importType: 'Excel',
+      importType: "Excel",
       ticket: newArr,
     });
   } catch (error) {
@@ -94,7 +94,10 @@ exports.getGroupNumberTicket = catchAsync(async (req, res, next) => {
   ).populate("groupTickets");
   const endDate = startOfDay(new Date(req.query.expiredDate));
   const startDate = endOfDay(new Date(req.query.expiredDate));
-  const queryData = doc.groupTickets;
+  let queryData = doc.groupTickets;
+  if (req.query.bigTicket === "65407895cb7fa743fc7b4e33") {
+    queryData = queryData.sort((a, b) => a.stt - b.stt);
+  }
   const newArr = [];
   for (let i = 0; i < queryData.length; i++) {
     const ticketCount = await Ticket.countDocuments({
