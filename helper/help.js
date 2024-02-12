@@ -55,6 +55,10 @@ exports.findDeselectedItem = (array1, array2) => {
   );
 };
 
+exports.sortArray = (a, b) => {
+  return a.stt - b.stt;
+};
+
 //     const queryObj = { ...this.queryString };
 //     const excludedFields = ["current", "pageSize", "sort", "fields", "name", "bigTicket"];
 //     excludedFields.forEach((el) => delete queryObj[el]);

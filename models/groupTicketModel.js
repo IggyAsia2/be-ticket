@@ -19,6 +19,9 @@ const groupTicketSchema = new mongoose.Schema(
       unique: true,
       required: [true, "A  Group Ticket must have a sku"],
     },
+    stt: {
+      type: Number,
+    },
     unit: {
       type: String,
       required: [true, "A Group ticket must have an unit"],

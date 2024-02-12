@@ -96,8 +96,9 @@ exports.getGroupNumberTicket = catchAsync(async (req, res, next) => {
   const startDate = endOfDay(new Date(req.query.expiredDate));
   let queryData = doc.groupTickets;
   if (req.query.bigTicket === "65407895cb7fa743fc7b4e33") {
-    queryData = queryData.sort((a, b) => a.stt - b.stt);
+    queryData = doc.groupTickets.sort((a, b) => a.stt - b.stt);
   }
+
   const newArr = [];
   for (let i = 0; i < queryData.length; i++) {
     const ticketCount = await Ticket.countDocuments({
