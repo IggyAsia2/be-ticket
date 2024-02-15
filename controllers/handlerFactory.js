@@ -111,6 +111,10 @@ exports.getOne = (Model, name, popOptions) =>
       return next(new AppError(`No ${name} found with that ID`, 404));
     }
 
+    if (doc.active === false) {
+      return next(new AppError(`Tài khoản chưa kích hoạt`, 404));
+    }
+
     res.status(200).json({
       status: "success",
       data: doc,

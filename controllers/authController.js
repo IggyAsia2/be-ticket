@@ -76,6 +76,10 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError("Sai email hoặc mật khẩu!", 401));
   }
 
+  if(user.active === false) {
+    return next(new AppError("Tài khoản chưa kích hoạt!", 401));
+  }
+
   // 3) If everything ok, send token to client
   createSendToken(user, 200, res);
 });
