@@ -111,7 +111,7 @@ exports.getAllReport = (Model, popOptions, virtualId) =>
       .filter()
       .sort()
       .limitFields()
-      .pagination();
+      // .pagination();
 
     const doc = await features.query;
     const newDoc = groupByFunc(doc);
