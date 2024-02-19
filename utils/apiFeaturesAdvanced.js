@@ -7,7 +7,7 @@ class APIFeaturesAdvanced {
   filter() {
     // 1A) Filtering
     const queryObj = { ...this.queryString };
-    const excludedFields = ["current", "pageSize", "sort", "fields", "name", "bigTicket"];
+    const excludedFields = ["current", "pageSize", "sort", "fields", "name", "bigTicket", "allOfTicket"];
     excludedFields.forEach((el) => delete queryObj[el]);
 
     // 1B) Advanced filtering

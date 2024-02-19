@@ -35,10 +35,15 @@ exports.getAll = (Model, popOptions, virtualId) =>
       Object.assign(filter, { groupTicket: { $in: dataBig } });
     }
 
+    if (req.query.hasOwnProperty("allOfTicket")) {
+      Object.assign(filter, { 'allOfTicket.serial': req.query.allOfTicket });
+    }
+
+    
     if (req.params[virtualId]) filter = { [virtualId]: req.params[virtualId] };
     if (req.query.name) filter = { name: new RegExp(req.query.name, "i") };
     // Execute Query
-
+    
     let query = Model.find(filter);
 
     if (popOptions) query.populate(popOptions);
@@ -98,7 +103,6 @@ exports.getAllReport = (Model, popOptions, virtualId) =>
       // filter = { groupTicket: { $in: dataBig } };
     }
 
-    console.log(filter);
     if (req.params[virtualId]) filter = { [virtualId]: req.params[virtualId] };
     if (req.query.name) filter = { name: new RegExp(req.query.name, "i") };
     // Execute Query
@@ -110,8 +114,8 @@ exports.getAllReport = (Model, popOptions, virtualId) =>
     const features = new APIFeaturesAdvanced(query, req.query)
       .filter()
       .sort()
-      .limitFields()
-      // .pagination();
+      .limitFields();
+    // .pagination();
 
     const doc = await features.query;
     const newDoc = groupByFunc(doc);
